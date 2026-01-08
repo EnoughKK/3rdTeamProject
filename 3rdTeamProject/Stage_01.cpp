@@ -13,10 +13,10 @@ Stage_01::~Stage_01()
 
 void Stage_01::Init()
 {
-    Object* button = new Button(L"Stage_01");
-    button->Initialize();
-    button->SetPos(400, 300);
-    GET_SINGLE(ObjectManager)->Add(BUTTON, button);
+    //Object* button = new Button(L"Stage_01");
+    //button->Initialize();
+    //button->SetPos(400, 300);
+    //GET_SINGLE(ObjectManager)->Add(BUTTON, button);
 }
 
 void Stage_01::Update()

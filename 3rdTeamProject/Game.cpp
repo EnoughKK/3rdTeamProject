@@ -3,11 +3,11 @@
 
 Game::Game()
 {
-	if(GET_SINGLE(InputManager)->GetButton(KeyType::A))
-	{
+	//if(GET_SINGLE(InputManager)->GetButton(KeyType::A))
+	//{
 
-	}
-	//
+	//}
+	////
 }
 
 Game::~Game()
@@ -32,7 +32,7 @@ void Game::Initialize()
 	GET_SINGLE(TimeManager)->Init();
 	GET_SINGLE(InputManager)->Init(g_hWnd);
 
-	GET_SINGLE(SceneManager)->ChangeScene(SceneType::Logo);
+	GET_SINGLE(SceneManager)->ChangeScene(SceneType::Stage_01);
 }
 
 void Game::Update()
