@@ -152,6 +152,8 @@
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Stage_01.h" />
+    <ClInclude Include="Stage_11.h" />
+    <ClInclude Include="Stage_21.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="TimeManager.h" />
     <ClInclude Include="Types.h" />
@@ -174,6 +176,8 @@
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Stage_01.cpp" />
+    <ClCompile Include="Stage_11.cpp" />
+    <ClCompile Include="Stage_21.cpp" />
     <ClCompile Include="TimeManager.cpp" />
     <ClCompile Include="Utils.cpp" />
   </ItemGroup>
