@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "Stage_11.h"
+#include "Player2.h"
 
 Stage_11::Stage_11()
 {
@@ -11,6 +12,13 @@ Stage_11::~Stage_11()
 
 void Stage_11::Init()
 {
+	if (GET_SINGLE(ObjectManager)->GetObjectList(PLAYER)->empty())
+	{
+		Object* player = new Player2;
+		player->Initialize();
+		player->SetPos(WINCX/2, WINCY/2);
+		GET_SINGLE(ObjectManager)->Add(PLAYER, player);
+	}
 }
 
 void Stage_11::Update()

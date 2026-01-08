@@ -111,6 +111,9 @@
     <ClInclude Include="Stage_11.h">
       <Filter>소스 파일\02. Scene\Game</Filter>
     </ClInclude>
+    <ClInclude Include="Player2.h">
+      <Filter>소스 파일\03.Object\Player</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="3rdTeamProject.rc">
@@ -176,6 +179,9 @@
     </ClCompile>
     <ClCompile Include="Stage_11.cpp">
       <Filter>소스 파일\02. Scene\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Player2.cpp">
+      <Filter>소스 파일\03.Object\Player</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
