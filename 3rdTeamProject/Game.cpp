@@ -14,7 +14,7 @@ Game::~Game()
 void Game::Initialize()
 {
 	_hDC = ::GetDC(g_hWnd);
-
+	// 
 	// 더블 버퍼링
 	::GetClientRect(g_hWnd, &_rect);
 	_hdcBack = ::CreateCompatibleDC(_hDC);

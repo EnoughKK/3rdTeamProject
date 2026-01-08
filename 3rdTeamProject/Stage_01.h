@@ -12,5 +12,8 @@ public:
 	virtual void Late_Update() override;
 	virtual void Render(HDC hdc) override;
 	virtual void Release() override;
+private:
+	Object* maze;
+	Object* player;
 };
 
