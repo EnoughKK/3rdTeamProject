@@ -51,11 +51,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     Game   MainGame;
     MainGame.Initialize();
 
-    DWORD   dwTime = GetTickCount();
-
-    // 기본 메시지 루프입니다:
     uint64 prevTick(0);
-
+  
     LARGE_INTEGER freq, prev, now;
     QueryPerformanceFrequency(&freq);
     QueryPerformanceCounter(&prev);
