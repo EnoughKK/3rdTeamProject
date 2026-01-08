@@ -14,6 +14,9 @@ enum class SceneType
 enum OBJID
 {
 	PLAYER,
+	PLAYER_LIGHT,
+	PLAYER_RIFLE,
+	PLAYER_BULLET,
 	MONSTER,
 	BUTTON,
 

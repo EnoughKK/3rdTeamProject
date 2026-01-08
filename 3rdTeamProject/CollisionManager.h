@@ -1,5 +1,6 @@
 #pragma once
-class CollisionManager
-{
+class CollisionManager {
+	DECLARE_SINGLE(CollisionManager)
+
 };
 
