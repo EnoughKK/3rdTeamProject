@@ -128,5 +128,10 @@ void ObjectManager::ChangeSceneClear()
 
 		std::for_each(_objectList[i].begin(), _objectList[i].end(), Safe_Delete<Object*>);
 		_objectList[i].clear();
+		//dfdfdfd
+		//issue #3
+
+
+
 	}
 }
