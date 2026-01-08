@@ -19,18 +19,18 @@ Button::~Button()
 
 void Button::Initialize()
 {
-	_info.vPos = { 400.f, 300.f, 0.f };
-	_size = { 150.f, 50.f, 0.f };
+	//_info.vPos = { 400.f, 300.f, 0.f };
+	_size = { 70.f, 20.f, 0.f };
 }
 
 int Button::Update()
 {
     POINT mousePos = GET_SINGLE(InputManager)->GetMousePos();
 
-	float l = _info.vPos.x;
-	float r = _info.vPos.x + _size.x;
-	float t = _info.vPos.y;
-	float d = _info.vPos.y + _size.y;
+	float l = _info.vPos.x - 10;
+	float r = _info.vPos.x + _size.x + 10;
+	float t = _info.vPos.y - 10;
+	float d = _info.vPos.y + _size.y + 10;
 
 	if (mousePos.x > l && mousePos.x < r && mousePos.y > t && mousePos.y < d)
 	{
@@ -55,10 +55,17 @@ void Button::Late_Update()
 
 void Button::Render(HDC hDC)
 {
-	//Utils::DrawCircle(hDC, _info.vPos, 50);
+	float l = _info.vPos.x - 10;
+	float r = _info.vPos.x + _size.x + 10;
+	float t = _info.vPos.y - 10;
+	float d = _info.vPos.y + _size.y + 10;
+
+	::Rectangle(hDC, l, t, r, d);
+
     Utils::DrawText(hDC, _info.vPos, _text);
 }
 
 void Button::Release()
 {
+
 }
