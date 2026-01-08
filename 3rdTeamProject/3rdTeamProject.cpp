@@ -56,7 +56,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     LARGE_INTEGER freq, prev, now;
     QueryPerformanceFrequency(&freq);
     QueryPerformanceCounter(&prev);
-
+  
     const double FRAME_TIME = 1.0 / 60.0;  // 60 FPS
 
     while (msg.message != WM_QUIT)
