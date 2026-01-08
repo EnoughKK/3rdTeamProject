@@ -15,7 +15,12 @@ public:
 
 private:
 	void	Key_Input();
+	void	BottomCol();
 
+private:
+	bool _isjump = true;
+
+private:
 	D3DXVECTOR3 _LT;
 	D3DXVECTOR3 _RT;
 	D3DXVECTOR3 _LD;

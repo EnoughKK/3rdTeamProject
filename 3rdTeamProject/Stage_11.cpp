@@ -37,6 +37,8 @@ void Stage_11::Render(HDC hdc)
 {
     GET_SINGLE(ObjectManager)->Render(hdc);
 
+	MoveToEx(hdc, 0.f, 500.f, nullptr);
+	LineTo(hdc, 800.f, 500.f);
 }
 
 void Stage_11::Release()

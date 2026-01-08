@@ -25,6 +25,13 @@ void Player2::Initialize()
 
 int Player2::Update()
 {
+	float deltaTime = GET_SINGLE(TimeManager)->GetDeltaTime();
+
+	if (_isjump)
+	{
+		_info.vPos.y += deltaTime * _speed * 100.f;
+	}
+
 	Key_Input();
 
 	D3DXMATRIX matScale, matRotZ, matTrans;
@@ -74,6 +81,8 @@ int Player2::Update()
 	D3DXVec3TransformCoord(&_RT_MS, &_RT_MS, &bodyWorld);
 	D3DXVec3TransformCoord(&_LD_MS, &_LD_MS, &bodyWorld);
 	D3DXVec3TransformCoord(&_RD_MS, &_RD_MS, &bodyWorld);
+
+	BottomCol();
 
     return OBJ_NOEVENT;
 }
@@ -136,5 +145,36 @@ void Player2::Key_Input()
 	{
 		_info.vPos.x -= cosf(_bodyAngle) * _speed;
 		_info.vPos.y -= sinf(_bodyAngle) * _speed;
+	}
+}
+
+void Player2::BottomCol()
+{
+	if (_LT.y > 500.f)
+	{
+		_isjump = false;
+
+		_info.vPos.y -= _LT.y - 500.f;
+	}
+
+	else if (_RT.y > 500.f)
+	{
+		_isjump = false;
+
+		_info.vPos.y -= _RT.y - 500.f;
+	}
+
+	else if (_RD.y > 500.f)
+	{
+		_isjump = false;
+
+		_info.vPos.y -= _LD.y - 500.f;
+	}
+
+	else if (_LD.y > 500.f)
+	{
+		_isjump = false;
+
+		_info.vPos.y -= _RD.y - 500.f;
 	}
 }
