@@ -16,6 +16,8 @@ void LogoScene::Init()
     button->Initialize();
     button->SetPos(400, 200);
     GET_SINGLE(ObjectManager)->Add(BUTTON, button);
+
+    // issue check
 }
 
 void LogoScene::Update()
