@@ -7,12 +7,15 @@ Game::Game()
 	{
 
 	}
+	//
 }
 
 Game::~Game()
 {
 	Release();
 	_CrtDumpMemoryLeaks(); // 메모리 누수 체크 디버그창에 나옴
+	// Tesgin
+	// Issue 
 }
 
 void Game::Initialize()
