@@ -54,30 +54,35 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     DWORD   dwTime = GetTickCount();
 
     // 기본 메시지 루프입니다:
-    while (GetMessage(&msg, nullptr, 0, 0))
+    uint64 prevTick(0);
+
+    LARGE_INTEGER freq, prev, now;
+    QueryPerformanceFrequency(&freq);
+    QueryPerformanceCounter(&prev);
+
+    const double FRAME_TIME = 1.0 / 60.0;  // 60 FPS
+
+    while (msg.message != WM_QUIT)
     {
+        // 메시지가 있으면 처리
         if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
         {
-            if (msg.message == WM_QUIT)
-                break;
-
-            if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
-            {
-                TranslateMessage(&msg);
-                DispatchMessage(&msg);
-            }
+            TranslateMessage(&msg);
+            DispatchMessage(&msg);
+            continue;    // 메시지 처리 후 다시 루프 처음으로
         }
 
-        else
-        {
-            if (dwTime + 10 < GetTickCount())
-            {
-                MainGame.Update();
-                MainGame.Late_Update();
-                MainGame.Render();
+        // 메시지가 없을 때는 프레임 제한 로직 실행
+        QueryPerformanceCounter(&now);
+        double delta = (double)(now.QuadPart - prev.QuadPart) / freq.QuadPart;
 
-                dwTime = GetTickCount();
-            }
+        if (delta >= FRAME_TIME)
+        {
+            prev = now;
+
+            MainGame.Update();
+            MainGame.Late_Update();
+            MainGame.Render();
         }
     }
 

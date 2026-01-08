@@ -16,6 +16,6 @@ enum OBJID
 	PLAYER,
 	MONSTER,
 	BUTTON,
-
+	MAZE,
 	OBJ_END
 };
