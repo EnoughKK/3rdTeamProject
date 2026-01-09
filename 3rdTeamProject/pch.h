@@ -25,8 +25,8 @@
 #include "TimeManager.h"
 #include "SceneManager.h"
 #include "ObjectManager.h"
-//#include "CollisionManager.h"
-//#include "Camera.h"
+#include "CollisionManager.h"
+#include "Camera.h"
 
 #ifdef _DEBUG
 

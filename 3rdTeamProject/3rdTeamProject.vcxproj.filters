@@ -40,6 +40,9 @@
     <Filter Include="소스 파일\03.Object\Player">
       <UniqueIdentifier>{4fd1d25d-79b5-4ce9-98ac-90e258ccb246}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\03.Object\Obstacle">
+      <UniqueIdentifier>{58f6f0bc-7cc1-4466-ac70-9c8d01faa879}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="3rdTeamProject.h">
@@ -141,6 +144,9 @@
     <ClInclude Include="Player03.h">
       <Filter>소스 파일\03.Object\Player</Filter>
     </ClInclude>
+    <ClInclude Include="Square_Obstacle.h">
+      <Filter>소스 파일\03.Object\Obstacle</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="3rdTeamProject.rc">
@@ -236,6 +242,9 @@
     </ClCompile>
     <ClCompile Include="Player1.cpp">
       <Filter>소스 파일\03.Object\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Square_Obstacle.cpp">
+      <Filter>소스 파일\03.Object\Obstacle</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

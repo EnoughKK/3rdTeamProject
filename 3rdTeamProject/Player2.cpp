@@ -19,6 +19,8 @@ void Player2::Initialize()
 
 	_speed = 2.0f;
 
+	_size = { 50.f, 50.f, 0 };
+
 	_info.vPos.x = 400;
 	_info.vPos.y = 300;
 }
@@ -26,6 +28,8 @@ void Player2::Initialize()
 int Player2::Update()
 {
 	float deltaTime = GET_SINGLE(TimeManager)->GetDeltaTime();
+
+	_prevPos = _info.vPos;
 
 	if (_bodyAngle > (2 * D3DX_PI))
 		_bodyAngle -= (2 * D3DX_PI);
@@ -39,16 +43,18 @@ int Player2::Update()
 
 	float  g = 15.f;
 
+	Key_Input();
+
 	_jumpSpeed -= g * deltaTime;
 
 	_info.vPos.y -= _jumpSpeed * 3;
-	_info.vPos.x += _speed * deltaTime * 10.f;
-
-	Key_Input();
+	_info.vPos.x += _speed * deltaTime * 70.f;
 
 	JumpRotation();
 
 	CalcWorld();
+
+	SquareCol();
 
 	BottomCol();
 
@@ -188,11 +194,25 @@ void Player2::BottomCol()
 	if (maxY > 500.f)
 	{
 		_isjump = false;
-
-		if (_jumpSpeed < -5.f)
-			_jumpSpeed = 0.f;
+		
+_jumpSpeed = 0.f;
 
 		_info.vPos.y -= maxY - 500;
+	}
+}
+
+void Player2::SquareCol()
+{
+	const vector<Object*>* ObstacleS_List = GET_SINGLE(ObjectManager)->GetObjectList(OBSTACLE_S);
+
+	for (auto obstacle : (*ObstacleS_List))
+	{
+		if (GET_SINGLE(CollisionManager)->CollisionLine(this, obstacle))
+		{
+			_isjump = false;
+
+			_jumpSpeed = 0.f;
+		}
 	}
 }
 
@@ -202,7 +222,7 @@ void Player2::JumpRotation()
 
 	float angle = D3DX_PI / 180.0f;
 
-	if (_isjump)
+	if (_isjump || _jumpSpeed < -1.f)
 	{
 		_bodyAngle += angle * _RSpeed * 150 * deltaTime;
 	}

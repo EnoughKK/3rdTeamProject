@@ -20,5 +20,7 @@ enum OBJID
 	MONSTER,
 	BUTTON,
 	MAZE,
+	OBSTACLE_S,
+
 	OBJ_END
 };
