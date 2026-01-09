@@ -23,7 +23,9 @@ private:
 private:
 	bool _isjump = true;
 	float _jumpSpeed = 0.f;
-	float _RSpeed = 2.f;
+	float _RSpeed = 1.8f;
+	float _SRSpeed = 4.f;
+	float _prevAngle = 0.f;
 
 private:
 	D3DXVECTOR3 _LT;

@@ -27,7 +27,17 @@ int Player2::Update()
 {
 	float deltaTime = GET_SINGLE(TimeManager)->GetDeltaTime();
 
-	float  g = 9.8f;
+	if (_bodyAngle > (2 * D3DX_PI))
+		_bodyAngle -= (2 * D3DX_PI);
+
+	if (_bodyAngle < 0.f)
+		_bodyAngle += (2 * D3DX_PI);
+
+	_prevAngle = _bodyAngle;
+
+	SortRotation();
+
+	float  g = 15.f;
 
 	_jumpSpeed -= g * deltaTime;
 
@@ -109,7 +119,7 @@ void Player2::Key_Input()
 
 	if (GET_SINGLE(InputManager)->GetButton(KeyType::SpaceBar) && !_isjump)
 	{
-		_jumpSpeed = 3.f;
+		_jumpSpeed = 5.f;
 
 		_isjump = true;
 	}
@@ -179,6 +189,9 @@ void Player2::BottomCol()
 	{
 		_isjump = false;
 
+		if (_jumpSpeed < -5.f)
+			_jumpSpeed = 0.f;
+
 		_info.vPos.y -= maxY - 500;
 	}
 }
@@ -197,8 +210,105 @@ void Player2::JumpRotation()
 
 void Player2::SortRotation()
 {
+	float deltaTime = GET_SINGLE(TimeManager)->GetDeltaTime();
+
+	float angle = D3DX_PI / 180.0f;
+
 	if (!_isjump)
 	{
+		if (_bodyAngle > (D3DX_PI * 7.f / 4.f) && _bodyAngle < 2 * D3DX_PI)
+		{
+			_bodyAngle += angle * _SRSpeed * 150 * deltaTime;
+		}
 
+		else if (_bodyAngle < (D3DX_PI/ 4.f) && _bodyAngle > 0.f)
+		{
+			_bodyAngle -= angle * _SRSpeed * 150 * deltaTime;
+		}
+
+		else if (_bodyAngle < (D3DX_PI / 2.f) && _bodyAngle > (D3DX_PI / 4.f))
+		{
+			_bodyAngle += angle * _SRSpeed * 150 * deltaTime;
+		}
+
+		else if (_bodyAngle < (D3DX_PI * 3.f / 4.f) && _bodyAngle > (D3DX_PI / 2.f))
+		{
+			_bodyAngle -= angle * _SRSpeed * 150 * deltaTime;
+		}
+
+		else if (_bodyAngle < (D3DX_PI) && _bodyAngle > (D3DX_PI * 3.f / 4.f))
+		{
+			_bodyAngle += angle * _SRSpeed * 150 * deltaTime;
+		}
+
+		else if (_bodyAngle < (D3DX_PI * 5.f / 4.f) && _bodyAngle > (D3DX_PI))
+		{
+			_bodyAngle -= angle * _SRSpeed * 150 * deltaTime;
+		}
+
+		else if (_bodyAngle < (D3DX_PI * 3.f / 2.f) && _bodyAngle > (D3DX_PI * 5.f / 4.f))
+		{
+			_bodyAngle += angle * _SRSpeed * 150 * deltaTime;
+		}
+
+		else if (_bodyAngle < (D3DX_PI * 7.f / 4.f) && _bodyAngle > (D3DX_PI * 3.f / 2.f))
+		{
+			_bodyAngle -= angle * _SRSpeed * 150 * deltaTime;
+		}
+
+		// 360도 넘으면 다시 0도로
+		if (_bodyAngle > (2 * D3DX_PI))
+			_bodyAngle -= (2 * D3DX_PI);
+
+		if(_bodyAngle < 0.f)
+			_bodyAngle += (2 * D3DX_PI);
+
+		if (_prevAngle > (D3DX_PI * 7.f / 4.f) && _prevAngle < 0.f)
+		{
+			if (_bodyAngle < (D3DX_PI / 4.f))
+				_bodyAngle = 0.f;
+		}
+
+		if (_prevAngle > 0.f && _prevAngle < (D3DX_PI / 4.f))
+		{
+			if (_bodyAngle > (D3DX_PI * 7.f / 4.f))
+				_bodyAngle = 0.f;
+		}
+
+		if (_prevAngle < (D3DX_PI / 2.f) && _prevAngle >(D3DX_PI / 4.f))
+		{
+			if (_bodyAngle > (D3DX_PI / 2.f))
+				_bodyAngle = (D3DX_PI / 2.f);
+		}
+
+		if (_prevAngle < (D3DX_PI * 3.f / 4.f) && _prevAngle > (D3DX_PI / 2.f))
+		{
+			if (_bodyAngle < (D3DX_PI / 2.f))
+				_bodyAngle = (D3DX_PI / 2.f);
+		}
+
+		if (_prevAngle < (D3DX_PI) && _prevAngle >(D3DX_PI * 3.f / 4.f))
+		{
+			if (_bodyAngle > (D3DX_PI))
+				_bodyAngle = (D3DX_PI);
+		}
+
+		if (_prevAngle < (D3DX_PI * 5.f / 4.f) && _prevAngle > (D3DX_PI))
+		{
+			if (_bodyAngle < (D3DX_PI))
+				_bodyAngle = (D3DX_PI);
+		}
+
+		if (_prevAngle < (D3DX_PI * 3.f / 2.f) && _prevAngle >(D3DX_PI * 5.f / 4.f))
+		{
+			if (_bodyAngle > (D3DX_PI * 3.f / 2.f))
+				_bodyAngle = (D3DX_PI * 3.f / 2.f);
+		}
+
+		if (_prevAngle < (D3DX_PI * 7.f / 4.f) && _prevAngle > (D3DX_PI * 3.f / 2.f))
+		{
+			if (_bodyAngle < (D3DX_PI * 3.f / 2.f))
+				_bodyAngle = (D3DX_PI * 3.f / 2.f);
+		}
 	}
 }
