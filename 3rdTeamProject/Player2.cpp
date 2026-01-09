@@ -168,13 +168,13 @@ void Player2::BottomCol()
 	{
 		_isjump = false;
 
-		_info.vPos.y -= _LD.y - 500.f;
+		_info.vPos.y -= _RD.y - 500.f;
 	}
 
 	else if (_LD.y > 500.f)
 	{
 		_isjump = false;
 
-		_info.vPos.y -= _RD.y - 500.f;
+		_info.vPos.y -= _LD.y - 500.f;
 	}
 }
