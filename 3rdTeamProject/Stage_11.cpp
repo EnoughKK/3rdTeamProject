@@ -16,7 +16,7 @@ void Stage_11::Init()
 	{
 		Object* player = new Player2;
 		player->Initialize();
-		player->SetPos(WINCX/2, WINCY/2);
+		player->SetPos(50.f, WINCY/2);
 		GET_SINGLE(ObjectManager)->Add(PLAYER, player);
 	}
 }

@@ -18,10 +18,12 @@ private:
 	void	CalcWorld();
 	void	BottomCol();
 	void	JumpRotation();
+	void	SortRotation();
 
 private:
 	bool _isjump = true;
 	float _jumpSpeed = 0.f;
+	float _RSpeed = 2.f;
 
 private:
 	D3DXVECTOR3 _LT;

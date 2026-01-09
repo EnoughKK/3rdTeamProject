@@ -32,6 +32,7 @@ int Player2::Update()
 	_jumpSpeed -= g * deltaTime;
 
 	_info.vPos.y -= _jumpSpeed * 3;
+	_info.vPos.x += _speed * deltaTime * 10.f;
 
 	Key_Input();
 
@@ -190,6 +191,14 @@ void Player2::JumpRotation()
 
 	if (_isjump)
 	{
-		_bodyAngle += angle * _speed * 150 * deltaTime;
+		_bodyAngle += angle * _RSpeed * 150 * deltaTime;
+	}
+}
+
+void Player2::SortRotation()
+{
+	if (!_isjump)
+	{
+
 	}
 }
