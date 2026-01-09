@@ -15,10 +15,13 @@ public:
 
 private:
 	void	Key_Input();
+	void	CalcWorld();
 	void	BottomCol();
+	void	JumpRotation();
 
 private:
 	bool _isjump = true;
+	float _jumpSpeed = 0.f;
 
 private:
 	D3DXVECTOR3 _LT;
