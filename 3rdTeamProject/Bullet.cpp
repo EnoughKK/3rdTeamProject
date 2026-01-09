@@ -27,7 +27,7 @@ void Bullet::Initialize() {
 	}
 }
 int Bullet::Update() {
-	FLOAT BulletSpeed = 20.f;
+	FLOAT BulletSpeed = 50.f;
 	PositionVector = { _info.vPos.x + BulletSpeed * cosf(D3DXToRadian(AngleFromPlayer)), _info.vPos.y + BulletSpeed * sinf(D3DXToRadian(AngleFromPlayer)) , 0.f };
     
 	return 0;
@@ -43,29 +43,16 @@ void Bullet::Render(HDC DC) {
 	_info.vPos = { 0.f, 0.f, 0.f };
 
 	D3DXMatrixScaling(&ScaleMatrix, ScaleVector.x, ScaleVector.y, ScaleVector.z);
-	//D3DXMatrixRotationZ(&RotationMatrix, D3DXToRadian(PlayerRotationValue));
 	D3DXMatrixTranslation(&PositionMatrix, PositionVector.x, PositionVector.y, PositionVector.z);
 
 	_info.matWorld = ScaleMatrix * PositionMatrix;
 
 	D3DXVec3TransformCoord(&_info.vPos, &_info.vPos, &_info.matWorld);
 
-	//HPEN myPen = CreatePen(PS_SOLID, 0, RGB(120, 120, 120));
-	//HGDIOBJ oldPen = SelectObject(DC, myPen);
-	//
-	//HBRUSH myBrush = (HBRUSH)GetStockObject(BLACK_BRUSH);
-	//HBRUSH oldBrush = (HBRUSH)SelectObject(DC, myBrush);
-	//
 	Rectangle(DC, _info.vPos.x - ScaleVector.x,
 		_info.vPos.y - ScaleVector.y,
 		_info.vPos.x + ScaleVector.x,
 		_info.vPos.y + ScaleVector.y);
-	//
-	//SelectObject(DC, oldBrush);
-	//DeleteObject(myBrush);
-	//
-	//SelectObject(DC, oldPen);
-	//DeleteObject(myPen);
 }
 void Bullet::Release() {
 
