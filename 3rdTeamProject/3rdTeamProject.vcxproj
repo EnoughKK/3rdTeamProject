@@ -146,6 +146,7 @@
     <ClInclude Include="framework.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="InputManager.h" />
+    <ClInclude Include="Jump_Obstacle.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="LineManager.h" />
     <ClInclude Include="LogoScene.h" />
@@ -181,6 +182,7 @@
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="InputManager.cpp" />
+    <ClCompile Include="Jump_Obstacle.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="LineManager.cpp" />
     <ClCompile Include="LogoScene.cpp" />

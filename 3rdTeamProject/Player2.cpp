@@ -130,7 +130,7 @@ void Player2::Key_Input()
 
 	if (GET_SINGLE(InputManager)->GetButton(KeyType::SpaceBar) && !_isjump)
 	{
-		_jumpSpeed = 5.f;
+		_jumpSpeed = 4.5f;
 
 		_isjump = true;
 	}
@@ -231,7 +231,7 @@ void Player2::SquareCol()
 
 	for (auto obstacle : (*Obstacle_List))
 	{
-		if (GET_SINGLE(CollisionManager)->CollisionLine(this, obstacle))
+		if (GET_SINGLE(CollisionManager)->Collision_Tri(this, obstacle))
 		{
 			_isjump = false;
 
@@ -241,16 +241,17 @@ void Player2::SquareCol()
 
 			_bodyAngle = 0.f;
 		}
+	}
 
-		if (GET_SINGLE(CollisionManager)->Collision_Left(this, obstacle))
+	Obstacle_List = GET_SINGLE(ObjectManager)->GetObjectList(OBSTACLE_J);
+
+	for (auto obstacle : (*Obstacle_List))
+	{
+		if (GET_SINGLE(CollisionManager)->Collision_Tri(this, obstacle))
 		{
-			_isjump = false;
+			_isjump = true;
 
-			_jumpSpeed = 0.f;
-
-			_info.vPos = { 150.f, 470.f, 0 };
-
-			_bodyAngle = 0.f;
+			_jumpSpeed = 6.5f;
 		}
 	}
 }

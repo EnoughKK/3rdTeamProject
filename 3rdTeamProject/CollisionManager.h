@@ -15,5 +15,8 @@ class CollisionManager
 	bool Collision_Left(Object* Dst, Object* Src);
 
 	bool Collision_Down(Object* Dst, Object* Src);
+
+	bool Collision_Tri(Object* Dst, Object* Src);
+
 };
 

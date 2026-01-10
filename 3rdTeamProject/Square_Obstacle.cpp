@@ -11,7 +11,7 @@ Square_Obstacle::~Square_Obstacle()
 
 void Square_Obstacle::Initialize()
 {
-	_size = { 50.f, 20.f, 0.f };
+	_size = { 50.f, 50.f, 0.f };
 	_info.vPos = { 200.f, 450.f, 0.f };
 }
 

@@ -241,3 +241,33 @@ bool CollisionManager::Collision_Down(Object* Dst, Object* Src)
 
 	return false;
 }
+
+bool CollisionManager::Collision_Tri(Object* Dst, Object* Src)
+{
+	float tileTop = Src->GetPos().y;
+
+	float objBottom = Dst->GetPos().y + Dst->GetSize().y * 0.5f;
+
+	float tileLeft = Src->GetPos().x - Src->GetSize().x * 0.5f;
+	float tileRight = Src->GetPos().x + Src->GetSize().x * 0.5f;
+
+	float objLeft = Dst->GetPos().x - Dst->GetSize().x * 0.5f;
+	float objRight = Dst->GetPos().x + Dst->GetSize().x * 0.5f;
+
+	if (objRight < tileLeft || objLeft > tileRight)
+		return false;
+
+	float prevBottom = static_cast<Player2*>(Dst)->GetPrevPos().y + Dst->GetSize().y * 0.5f;
+	float currBottom = Dst->GetPos().y + Dst->GetSize().y * 0.5f;
+
+	if (prevBottom <= tileTop && currBottom >= tileTop)
+	{
+		float newY = tileTop - Dst->GetSize().y * 0.5f;
+		Dst->SetPos(Dst->GetPos().x, newY);
+
+		return true;
+	}
+
+	return false;
+}
+
