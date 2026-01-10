@@ -13,6 +13,7 @@ public:
     int Update() override;
     void Late_Update() override;
     void Render(HDC hDC) override;
+    void Key_Input();
     void Release() override;
 
     POINT getPoint(int n) {
@@ -31,7 +32,9 @@ public:
     bool GetSliding() { return isSliding; }
     void SetSliding(bool flag) { isSliding = flag; }
     DIRECTION GetDir() { return curDir; }
-    void SetDir(DIRECTION dir) { curDir = dir; }
+    DIRECTION GetPrevDir() { return prevDir; }
+    void SetPrevDir(DIRECTION dir) { prevDir = dir; }
+    void SetCurDir(DIRECTION dir) { curDir = dir; }
 
     float GetRadius() { return radius; }
     
@@ -43,5 +46,6 @@ private:
     POINT RB;
     bool isSliding;
     DIRECTION curDir;
+    DIRECTION prevDir;
 };
 
