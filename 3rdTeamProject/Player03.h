@@ -12,7 +12,8 @@ public:
 	void Render(HDC DC)		override;
 	void Release()			override;
 
-	D3DXVECTOR3 Get_PosinPos() { return Posin; }
+	D3DXVECTOR3 Get_PlayerPositionValue() { return PlayerPositionValue; }
+	void Set_PlayerPositionValue(D3DXVECTOR3 _pOut) { PlayerPositionValue = _pOut; }
 
 private:
 	D3DXVECTOR3	PlayerScaleValue;

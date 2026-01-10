@@ -42,7 +42,7 @@ void LightObject::Render(HDC DC) {
 	D3DXVECTOR3	LineDirectionVertex = { 0.f, 0.f, 0.f };
 	D3DXVECTOR3 LineVertex = { Player->Get_Info().vPos.x + ScrollManager::GetInstance()->Get_ScrollX(), Player->Get_Info().vPos.y + ScrollManager::GetInstance()->Get_ScrollY(), 0.f };
 	MoveToEx(DC, Player->Get_Info().vPos.x + ScrollManager::GetInstance()->Get_ScrollX(), Player->Get_Info().vPos.y + ScrollManager::GetInstance()->Get_ScrollY(), nullptr);
-	for (FLOAT i = 0.f; i < abs(RightAngle - LeftAngle); i += 1.f) {
+	for (FLOAT i = 0.f; i < abs(RightAngle - LeftAngle); i += 2.f) {
 		
 		if(((RightAngle - i) <= -30.f && (RightAngle - i) >= -90.f) ||
 			((RightAngle - i) <= -120.f && (RightAngle - i) >= -180.f) ||

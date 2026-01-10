@@ -8,7 +8,9 @@ class CollisionManager
 
 	bool CheckRect(Object* _Dst, Object* _Src, float* pX, float* pY);
 
-	void Collision_Rect(Object* Dst, Object* Src);
+	bool Collision_Rect(Object* Dst, Object* Src);
+
+	bool Collision_RectForPlayer(Object* Dst, Object* Src);
 
 	bool CollisionLine(Object* Dst, Object* Src);
 };

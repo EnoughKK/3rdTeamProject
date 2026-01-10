@@ -2,6 +2,7 @@
 #include "CollisionManager.h"
 #include "Player1.h"
 #include "Player2.h"
+#include "Player03.h"
 
 void CollisionManager::Collision_Line_Player(Object* player, vector<pair<D3DXVECTOR3, D3DXVECTOR3>> lines)
 {
@@ -130,7 +131,7 @@ bool CollisionManager::CheckRect(Object* _Dst, Object* _Src, float* pX, float* p
 	return false;
 }
 
-void CollisionManager::Collision_Rect(Object* Dst, Object* Src)
+bool CollisionManager::Collision_Rect(Object* Dst, Object* Src)
 {
 	float	fWidth(0.f), fHeight(0.f);
 
@@ -144,12 +145,20 @@ void CollisionManager::Collision_Rect(Object* Dst, Object* Src)
 			{
 				//Dst->Set_PosY(-fHeight);
 				Dst->SetPos(Dst->GetPos().x, (Dst->GetPos().y - fHeight));
+				if (Dst == ObjectManager::GetInstance()->GetObjectList(OBJID::PLAYER)->front()) {
+					dynamic_cast<Player03*>(Dst)->Set_PlayerPositionValue({ Dst->GetPos().x, (Dst->GetPos().y - fHeight), 0.f });
+				}
+				return true;
 			}
 			// 하 충돌
 			else
 			{
 				//Dst->Set_PosY(fHeight);
 				Dst->SetPos(Dst->GetPos().x, (Dst->GetPos().y + fHeight));
+				if (Dst == ObjectManager::GetInstance()->GetObjectList(OBJID::PLAYER)->front()) {
+					dynamic_cast<Player03*>(Dst)->Set_PlayerPositionValue({ Dst->GetPos().x, (Dst->GetPos().y + fHeight), 0.f });
+				}
+				return true;
 			}
 		}
 
@@ -160,16 +169,71 @@ void CollisionManager::Collision_Rect(Object* Dst, Object* Src)
 			if (Dst->GetPos().x < Src->GetPos().x)
 			{
 				Dst->SetPos(Dst->GetPos().x - fWidth, (Dst->GetPos().y));
+				return true;
 			}
 			// 우 충돌
 			else
 			{
 				//Dst->Set_PosX(fWidth);
 				Dst->SetPos(Dst->GetPos().x + fWidth, (Dst->GetPos().y));
+				return true;
 
 			}
 		}
 	}
+	return false;
+}
+
+bool CollisionManager::Collision_RectForPlayer(Object* Dst, Object* Src)
+{
+	float	fWidth(0.f), fHeight(0.f);
+
+	if (CheckRect(Dst, Src, &fWidth, &fHeight))
+	{
+		// 상 하 충돌
+		if (fWidth > fHeight)
+		{
+			// 상 충돌
+			if (Dst->GetPos().y < Src->GetPos().y)
+			{
+				if (Dst == ObjectManager::GetInstance()->GetObjectList(OBJID::PLAYER)->front()) {
+					dynamic_cast<Player03*>(Dst)->Set_PlayerPositionValue({ Dst->GetPos().x, (Dst->GetPos().y - fHeight), 0.f });
+				}
+				return true;
+			}
+			// 하 충돌
+			else
+			{
+				if (Dst == ObjectManager::GetInstance()->GetObjectList(OBJID::PLAYER)->front()) {
+					dynamic_cast<Player03*>(Dst)->Set_PlayerPositionValue({ Dst->GetPos().x, (Dst->GetPos().y + fHeight), 0.f });
+				}
+				return true;
+			}
+		}
+
+		// 좌 우 충돌
+		else
+		{
+			// 좌 충돌
+			if (Dst->GetPos().x < Src->GetPos().x)
+			{
+				if (Dst == ObjectManager::GetInstance()->GetObjectList(OBJID::PLAYER)->front()) {
+					dynamic_cast<Player03*>(Dst)->Set_PlayerPositionValue({ Dst->GetPos().x - fWidth, Dst->GetPos().y, 0.f });
+				}
+				return true;
+			}
+			// 우 충돌
+			else
+			{
+				if (Dst == ObjectManager::GetInstance()->GetObjectList(OBJID::PLAYER)->front()) {
+					dynamic_cast<Player03*>(Dst)->Set_PlayerPositionValue({ Dst->GetPos().x + fWidth, Dst->GetPos().y, 0.f });
+				}
+				return true;
+
+			}
+		}
+	}
+	return false;
 }
 
 bool CollisionManager::CollisionLine(Object* Dst, Object* Src)

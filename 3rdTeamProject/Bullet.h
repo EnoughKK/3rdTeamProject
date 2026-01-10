@@ -15,9 +15,13 @@ public:
 public:
 	void Set_Player(Object* _Player) { Player = _Player; }
 
+	void Set_Used(BOOL _Broken) { Broken = _Broken; _info.vPos = { -999999.f,-999999.f,-999999.f }; }
+
 private:
 	Object* Player;
 	POINT	MousePoint;
+
+	BOOL	Broken;
 
 	FLOAT	AngleFromPlayer;
 

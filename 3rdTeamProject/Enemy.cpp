@@ -1,12 +1,14 @@
 #include "pch.h"
 #include "Enemy.h"
 #include "ScrollManager.h"
+#include "Bullet.h"
 
 EnemyObject::EnemyObject()  { }
 EnemyObject::~EnemyObject() { Release(); }
 
 void EnemyObject::Initialize() {
 	_info.vLook = { 1.f, 0.f, 0.f };
+	_size = { 5.f, 5.f, 0.f };
 	EnemyHP = 60.f;
 	_speed = 5.f;
 	if (!Player) {
@@ -14,7 +16,9 @@ void EnemyObject::Initialize() {
 	}
 }
 int EnemyObject::Update() {
+
 	_info.vDir = Player->Get_Info().vPos - _info.vPos;
+
 	D3DXVec3Normalize(&_info.vDir, &_info.vDir);
 
 	if (_info.vPos.y < Player->Get_Info().vPos.y) {
@@ -24,47 +28,42 @@ int EnemyObject::Update() {
 		AngleFromPlayer = -D3DXToDegree(acosf(D3DXVec3Dot(&_info.vLook, &_info.vDir)));
 	}
 
+	for (auto BulletObject : *ObjectManager::GetInstance()->GetObjectList(OBJID::PLAYER_BULLET)) {
+		if (CollisionManager::GetInstance()->Collision_Rect(this, BulletObject)) {
+			EnemyHP -= 10;
+			dynamic_cast<Bullet*>(BulletObject)->Set_Used(true);
+			if (EnemyHP <= 0.f) { _info.vPos = { -9999999,-9999999,-9999999 }; }
+		}
+	}
     return 0;
 }
 void EnemyObject::Late_Update() {
 
 }
 void EnemyObject::Render(HDC DC) {
-	D3DXMatrixIdentity(&_info.matWorld);
+	if (EnemyHP > 0.f) {
+		D3DXMatrixIdentity(&_info.matWorld);
 
-	D3DXMATRIX ScaleMatrix, RotationMatrix, PositionMatrix;
+		D3DXMATRIX ScaleMatrix, RotationMatrix, PositionMatrix;
 
-	_info.vPos = { 0.f, 0.f, 0.f };
+		_info.vPos = { 0.f, 0.f, 0.f };
 
-	//D3DXVECTOR3 TriVertex01 = { _info.vPos.x + 5.f, _info.vPos.y      , 1.f };
-	//D3DXVECTOR3 TriVertex02 = { _info.vPos.x - 4.f, _info.vPos.y + 3.f, 1.f };
-	//D3DXVECTOR3 TriVertex03 = { _info.vPos.x - 4.f, _info.vPos.y - 3.f, 1.f };
+		D3DXMatrixScaling(&ScaleMatrix, 5.f, 5.f, 0.f);
+		D3DXMatrixRotationZ(&RotationMatrix, D3DXToRadian(AngleFromPlayer));
+		D3DXMatrixTranslation(&PositionMatrix, 700.f, 100.f, 0.f);
 
-	D3DXMatrixScaling(&ScaleMatrix, 5.f, 5.f, 5.f);
-	D3DXMatrixRotationZ(&RotationMatrix, D3DXToRadian(AngleFromPlayer));
-	D3DXMatrixTranslation(&PositionMatrix, 700.f, 100.f, 0.f);
+		_info.matWorld = ScaleMatrix * RotationMatrix * PositionMatrix;
 
-	_info.matWorld = ScaleMatrix * RotationMatrix * PositionMatrix;
+		D3DXVec3TransformCoord(&_info.vPos, &_info.vPos, &_info.matWorld);
 
-	D3DXVec3TransformCoord(&_info.vPos, &_info.vPos, &_info.matWorld);
-	//D3DXVec3TransformCoord(&TriVertex01, &TriVertex01, &_info.matWorld);
-	//D3DXVec3TransformCoord(&TriVertex02, &TriVertex02, &_info.matWorld);
-	//D3DXVec3TransformCoord(&TriVertex03, &TriVertex03, &_info.matWorld);
+		Rectangle(DC, _info.vPos.x + ScrollManager::GetInstance()->Get_ScrollX() - 5.f,
+			_info.vPos.y + ScrollManager::GetInstance()->Get_ScrollY() - 5.f,
+			_info.vPos.x + ScrollManager::GetInstance()->Get_ScrollX() + 5.f,
+			_info.vPos.y + ScrollManager::GetInstance()->Get_ScrollY() + 5.f);
 
-	//MoveToEx(DC, _info.vPos.x + ScrollManager::GetInstance()->Get_ScrollX(), _info.vPos.y + ScrollManager::GetInstance()->Get_ScrollY(), nullptr);
-	//LineTo(DC, _info.vPos.x + 50 * _info.vDir.x + ScrollManager::GetInstance()->Get_ScrollX(), _info.vPos.y + 50 * _info.vDir.y + ScrollManager::GetInstance()->Get_ScrollY());
-	//
-	//MoveToEx(DC, TriVertex01.x + ScrollManager::GetInstance()->Get_ScrollX(), TriVertex01.y + ScrollManager::GetInstance()->Get_ScrollY(), nullptr);
-	//LineTo(DC, TriVertex02.x + ScrollManager::GetInstance()->Get_ScrollX(), TriVertex02.y + ScrollManager::GetInstance()->Get_ScrollY());
-	//LineTo(DC, TriVertex03.x + ScrollManager::GetInstance()->Get_ScrollX(), TriVertex03.y + ScrollManager::GetInstance()->Get_ScrollY());
-	//LineTo(DC, TriVertex01.x + ScrollManager::GetInstance()->Get_ScrollX(), TriVertex01.y + ScrollManager::GetInstance()->Get_ScrollY());
 
-	Rectangle(DC, _info.vPos.x + ScrollManager::GetInstance()->Get_ScrollX() - 15.f,
-		_info.vPos.y + ScrollManager::GetInstance()->Get_ScrollY() -15.f,
-		_info.vPos.x + ScrollManager::GetInstance()->Get_ScrollX() +15.f,
-		_info.vPos.y + ScrollManager::GetInstance()->Get_ScrollY() +15.f);
-
-	Get_HPBar(DC);
+		Get_HPBar(DC);
+	}
 }
 void EnemyObject::Release() {
 

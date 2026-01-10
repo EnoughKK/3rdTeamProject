@@ -29,6 +29,8 @@ void Stage_21::Init() {
 }
 void Stage_21::Update() {
 	ScrollManager::GetInstance()->Scroll_Lock();
+	LineManager::GetInstance()->Update();
+	
     GET_SINGLE(ObjectManager)->Update();
 	
 }

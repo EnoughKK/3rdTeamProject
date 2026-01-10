@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "LineManager.h"
 #include "ScrollManager.h"
-
+#include "Player03.h"
 LineManager::~LineManager() { Release(); }
 
 void LineManager::Initialize() {
@@ -48,8 +48,14 @@ void LineManager::Initialize() {
 	MakeWall(675.f, 450.f, 50.f, 15.f);
 	MakeWall(725.f, 450.f, 15.f, 400.f);
 	MakeWall(2210.f, -500.f, 15.f, 1350.f);
-}
 
+	Player = ObjectManager::GetInstance()->GetObjectList(OBJID::PLAYER)->front();
+}
+void LineManager::Update() {
+	for (auto& Env : *ObjectManager::GetInstance()->GetObjectList(OBJID::ENVIROMENT)) {
+		CollisionManager::GetInstance()->Collision_RectForPlayer(Player, Env);
+	}
+}
 INT LineManager::Collision_Line(INT fX, INT fY) {
 	for (auto& Line : m_Linelist) {
 		if (((fX >= Line->VX1 + ScrollManager::GetInstance()->Get_ScrollX() && fX <= Line->VX2 + ScrollManager::GetInstance()->Get_ScrollX()) || 
@@ -67,9 +73,14 @@ INT LineManager::Collision_Line(INT fX, INT fY) {
 			return COL_UD;
 		}
 	}
+
 	return COL_END;
 }
 void LineManager::Render(HDC DC) {
+	for (auto& pLine : m_WallList) {
+		MoveToEx(DC, pLine->VX1 + ScrollManager::GetInstance()->Get_ScrollX(), pLine->VY1 + ScrollManager::GetInstance()->Get_ScrollY(), nullptr);
+		LineTo(DC, pLine->VX2 + ScrollManager::GetInstance()->Get_ScrollX(), pLine->VY2 + ScrollManager::GetInstance()->Get_ScrollY());
+	}
 	for (auto& pLine : m_Linelist) {
 		MoveToEx(DC, pLine->VX1 + ScrollManager::GetInstance()->Get_ScrollX(), pLine->VY1 + ScrollManager::GetInstance()->Get_ScrollY(), nullptr);
 		LineTo(DC, pLine->VX2 + ScrollManager::GetInstance()->Get_ScrollX(), pLine->VY2 + ScrollManager::GetInstance()->Get_ScrollY());
