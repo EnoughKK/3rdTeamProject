@@ -271,3 +271,17 @@ bool CollisionManager::Collision_Tri(Object* Dst, Object* Src)
 	return false;
 }
 
+bool CollisionManager::OnlyCheck(Object* _Dst, Object* _Src)
+{
+	float		fWidth = fabsf(_Dst->GetPos().x - _Src->GetPos().x);
+	float		fHeight = fabsf(_Dst->GetPos().y - _Src->GetPos().y);
+
+	float		fRadiusX = (_Dst->GetSize().x + _Src->GetSize().x) * 0.5f;
+	float		fRadiusY = (_Dst->GetSize().y + _Src->GetSize().y) * 0.5f;
+
+	if (fRadiusX >= fWidth && fRadiusY >= fHeight)
+		return true;
+
+	return false;
+}
+

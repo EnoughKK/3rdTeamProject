@@ -18,5 +18,7 @@ class CollisionManager
 
 	bool Collision_Tri(Object* Dst, Object* Src);
 
+	bool OnlyCheck(Object* _Dst, Object* _Src);
+
 };
 

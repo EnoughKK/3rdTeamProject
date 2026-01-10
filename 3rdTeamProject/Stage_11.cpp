@@ -50,6 +50,11 @@ void Stage_11::Init()
 		SO->SetPos(1200.f, 275.f);
 		GET_SINGLE(ObjectManager)->Add(OBSTACLE_S, SO);
 
+		SO = new Jump_Obstacle;
+		SO->Initialize();
+		SO->SetPos(1550.f, 490.f);
+		GET_SINGLE(ObjectManager)->Add(OBSTACLE_J, SO);
+
 		SO = new TriAngle_Obstacle;
 		SO->Initialize();
 		SO->SetPos(1600.f, 475.f);
@@ -59,6 +64,12 @@ void Stage_11::Init()
 		SO = new TriAngle_Obstacle;
 		SO->Initialize();
 		SO->SetPos(1650.f, 475.f);
+		SO->SetSize(50.f, 50.f);
+		GET_SINGLE(ObjectManager)->Add(OBSTACLE_T, SO);
+
+		SO = new TriAngle_Obstacle;
+		SO->Initialize();
+		SO->SetPos(1700.f, 475.f);
 		SO->SetSize(50.f, 50.f);
 		GET_SINGLE(ObjectManager)->Add(OBSTACLE_T, SO);
 	}

@@ -57,9 +57,9 @@ int Player2::Update()
 
 	CalcWorld();
 
-	SquareCol();
-
 	BottomCol();
+
+	SquareCol();
 
 	CalcWorld();
 
@@ -247,7 +247,7 @@ void Player2::SquareCol()
 
 	for (auto obstacle : (*Obstacle_List))
 	{
-		if (GET_SINGLE(CollisionManager)->Collision_Tri(this, obstacle))
+		if (GET_SINGLE(CollisionManager)->OnlyCheck(this, obstacle))
 		{
 			_isjump = true;
 
