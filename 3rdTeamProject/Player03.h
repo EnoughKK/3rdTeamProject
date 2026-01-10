@@ -12,8 +12,6 @@ public:
 	void Render(HDC DC)		override;
 	void Release()			override;
 
-	void GetLight(HDC DC);
-
 	D3DXVECTOR3 Get_PosinPos() { return Posin; }
 
 private:

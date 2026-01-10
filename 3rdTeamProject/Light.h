@@ -17,6 +17,5 @@ private:
 	Object* Player;
 
 	POINT		MousePoint;
-	BOOL		Distortion;
 };
 
