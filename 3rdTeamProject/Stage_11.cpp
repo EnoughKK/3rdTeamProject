@@ -2,6 +2,7 @@
 #include "Stage_11.h"
 #include "Player2.h"
 #include "Square_Obstacle.h"
+#include "TriAngle_Obstacle.h"
 
 Stage_11::Stage_11()
 {
@@ -37,10 +38,17 @@ void Stage_11::Init()
 		SO->SetPos(900.f, 200.f);
 		GET_SINGLE(ObjectManager)->Add(OBSTACLE_S, SO);
 
-		SO = new Square_Obstacle;
+		SO = new TriAngle_Obstacle;
 		SO->Initialize();
-		SO->SetPos(450.f, 450.f);
-		GET_SINGLE(ObjectManager)->Add(OBSTACLE_S, SO);
+		SO->SetPos(1300.f, 475.f);
+		SO->SetSize(50.f, 50.f);
+		GET_SINGLE(ObjectManager)->Add(OBSTACLE_T, SO);
+
+		SO = new TriAngle_Obstacle;
+		SO->Initialize();
+		SO->SetPos(1350.f, 475.f);
+		SO->SetSize(50.f, 50.f);
+		GET_SINGLE(ObjectManager)->Add(OBSTACLE_T, SO);
 	}
 }
 

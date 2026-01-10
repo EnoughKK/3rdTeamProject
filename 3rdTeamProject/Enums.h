@@ -21,6 +21,7 @@ enum OBJID
 	BUTTON,
 	MAZE,
 	OBSTACLE_S,
+	OBSTACLE_T,
 
 	OBJ_END
 };

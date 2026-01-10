@@ -17,7 +17,7 @@ void Player2::Initialize()
 
 	_info.vLook = { 1.f, 0.f, 0.f };
 
-	_speed = 4.0f;
+	_speed = 5.f;
 
 	_size = { 50.f, 50.f, 0 };
 
@@ -208,9 +208,10 @@ void Player2::BottomCol()
 
 void Player2::SquareCol()
 {
-	const vector<Object*>* ObstacleS_List = GET_SINGLE(ObjectManager)->GetObjectList(OBSTACLE_S);
+	const vector<Object*>* Obstacle_List = GET_SINGLE(ObjectManager)->GetObjectList(OBSTACLE_S);
 
-	for (auto obstacle : (*ObstacleS_List))
+	// 사각형 발판
+	for (auto obstacle : (*Obstacle_List))
 	{
 		if (GET_SINGLE(CollisionManager)->CollisionLine(this, obstacle))
 		{
@@ -223,6 +224,34 @@ void Player2::SquareCol()
 
 		if(GET_SINGLE(CollisionManager)->Collision_Down(this, obstacle))
 			_jumpSpeed = 0.f;
+	}
+
+	// 삼각형 장애물
+	Obstacle_List = GET_SINGLE(ObjectManager)->GetObjectList(OBSTACLE_T);
+
+	for (auto obstacle : (*Obstacle_List))
+	{
+		if (GET_SINGLE(CollisionManager)->CollisionLine(this, obstacle))
+		{
+			_isjump = false;
+
+			_jumpSpeed = 0.f;
+
+			_info.vPos = { 150.f, 470.f, 0 };
+
+			_bodyAngle = 0.f;
+		}
+
+		if (GET_SINGLE(CollisionManager)->Collision_Left(this, obstacle))
+		{
+			_isjump = false;
+
+			_jumpSpeed = 0.f;
+
+			_info.vPos = { 150.f, 470.f, 0 };
+
+			_bodyAngle = 0.f;
+		}
 	}
 }
 
