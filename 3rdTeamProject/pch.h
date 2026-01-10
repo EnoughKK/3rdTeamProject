@@ -15,7 +15,8 @@
 
 #pragma comment(lib, "d3d9.lib")
 #pragma comment(lib, "d3dx9.lib")
-
+#include <io.h>
+#include <iostream>
 #include "Types.h"
 #include "Defines.h"
 #include "Enums.h"

@@ -27,11 +27,21 @@ public:
         return RB; 
      } 
     }
+
+    bool GetSliding() { return isSliding; }
+    void SetSliding(bool flag) { isSliding = flag; }
+    DIRECTION GetDir() { return curDir; }
+    void SetDir(DIRECTION dir) { curDir = dir; }
+
+    float GetRadius() { return radius; }
+    
 private:
     float radius;
     POINT LT;
     POINT RT;
     POINT LB;
     POINT RB;
+    bool isSliding;
+    DIRECTION curDir;
 };
 

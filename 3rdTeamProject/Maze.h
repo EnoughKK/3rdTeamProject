@@ -20,10 +20,12 @@ private:
     void	Key_Input();
 
 private:
-    D3DXVECTOR3		m_vPoint[2];
-    D3DXVECTOR3		m_vOriginPoint[2];
-    float			m_fAngle;
+    /*D3DXVECTOR3		m_vPoint[4];
+    D3DXVECTOR3		m_vOriginPoint[4];*/
 
+    float			m_fAngle;
+    vector<D3DXVECTOR3> m_vPoint;
+    vector<D3DXVECTOR3> m_vOriginPoint;
     vector<pair<D3DXVECTOR3, D3DXVECTOR3>>lines;
     vector<pair<D3DXVECTOR3, D3DXVECTOR3>>originalLines;
 };
