@@ -13,12 +13,24 @@ public:
 	virtual void	Render(HDC hDC)	override;
 	virtual void	Release()		override;
 
+public:
+	D3DXVECTOR3 GetPrevPos() { return _prevPos; }
+
 private:
 	void	Key_Input();
+	void	CalcWorld();
 	void	BottomCol();
+	void	SquareCol();
+	void	JumpRotation();
+	void	SortRotation();
 
 private:
 	bool _isjump = true;
+	float _jumpSpeed = 0.f;
+	float _RSpeed = 1.8f;
+	float _SRSpeed = 4.f;
+	float _prevAngle = 0.f;
+	D3DXVECTOR3 _prevPos = {};
 
 private:
 	D3DXVECTOR3 _LT;

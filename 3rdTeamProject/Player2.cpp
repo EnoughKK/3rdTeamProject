@@ -19,6 +19,8 @@ void Player2::Initialize()
 
 	_speed = 2.0f;
 
+	_size = { 50.f, 50.f, 0 };
+
 	_info.vPos.x = 400;
 	_info.vPos.y = 300;
 }
@@ -27,62 +29,39 @@ int Player2::Update()
 {
 	float deltaTime = GET_SINGLE(TimeManager)->GetDeltaTime();
 
-	if (_isjump)
-	{
-		_info.vPos.y += deltaTime * _speed * 100.f;
-	}
+	_prevPos = _info.vPos;
+
+	if (_bodyAngle > (2 * D3DX_PI))
+		_bodyAngle -= (2 * D3DX_PI);
+
+	if (_bodyAngle < 0.f)
+		_bodyAngle += (2 * D3DX_PI);
+
+	_prevAngle = _bodyAngle;
+
+	SortRotation();
+
+	float  g = 15.f;
 
 	Key_Input();
 
-	D3DXMATRIX matScale, matRotZ, matTrans;
+	_jumpSpeed -= g * deltaTime;
 
-	D3DXMatrixScaling(&matScale, 1.f, 1.f, 1.f);
-	D3DXMatrixRotationZ(&matRotZ, _bodyAngle);
-	D3DXMatrixTranslation(&matTrans, _info.vPos.x, _info.vPos.y, 0.f);
+	_info.vPos.y -= _jumpSpeed * 3;
+	_info.vPos.x += _speed * deltaTime * 70.f;
 
-	D3DXMATRIX bodyWorld = matScale * matRotZ * matTrans;
+	if (_jumpSpeed < -1.f)
+		_isjump = true;
 
-	_LT = { -25.f, -25.f, 0 };
-	_RT = { 25.f, -25.f, 0 };
-	_LD = { -25.f, 25.f, 0 };
-	_RD = { 25.f, 25.f, 0 };
+	JumpRotation();
 
-	D3DXVec3TransformCoord(&_LT, &_LT, &bodyWorld);
-	D3DXVec3TransformCoord(&_RT, &_RT, &bodyWorld);
-	D3DXVec3TransformCoord(&_LD, &_LD, &bodyWorld);
-	D3DXVec3TransformCoord(&_RD, &_RD, &bodyWorld);
+	CalcWorld();
 
-	_LT_LE = { -15.f, -15.f, 0 };
-	_RT_LE = { -5.f, -15.f, 0 };
-	_LD_LE = { -15.f, -5.f, 0 };
-	_RD_LE = { -5.f, -5.f, 0 };
-
-	D3DXVec3TransformCoord(&_LT_LE, &_LT_LE, &bodyWorld);
-	D3DXVec3TransformCoord(&_RT_LE, &_RT_LE, &bodyWorld);
-	D3DXVec3TransformCoord(&_LD_LE, &_LD_LE, &bodyWorld);
-	D3DXVec3TransformCoord(&_RD_LE, &_RD_LE, &bodyWorld);
-
-	_LT_RE = { 15.f, -15.f, 0 };
-	_RT_RE = { 5.f, -15.f, 0 };
-	_LD_RE = { 15.f, -5.f, 0 };
-	_RD_RE = { 5.f, -5.f, 0 };
-
-	D3DXVec3TransformCoord(&_LT_RE, &_LT_RE, &bodyWorld);
-	D3DXVec3TransformCoord(&_RT_RE, &_RT_RE, &bodyWorld);
-	D3DXVec3TransformCoord(&_LD_RE, &_LD_RE, &bodyWorld);
-	D3DXVec3TransformCoord(&_RD_RE, &_RD_RE, &bodyWorld);
-
-	_LT_MS = { -15.f, 5.f, 0 };
-	_RT_MS = { 15.f, 5.f, 0 };
-	_LD_MS = { -15.f, 10.f, 0 };
-	_RD_MS = { 15.f, 10.f, 0 };
-
-	D3DXVec3TransformCoord(&_LT_MS, &_LT_MS, &bodyWorld);
-	D3DXVec3TransformCoord(&_RT_MS, &_RT_MS, &bodyWorld);
-	D3DXVec3TransformCoord(&_LD_MS, &_LD_MS, &bodyWorld);
-	D3DXVec3TransformCoord(&_RD_MS, &_RD_MS, &bodyWorld);
+	SquareCol();
 
 	BottomCol();
+
+	CalcWorld();
 
     return OBJ_NOEVENT;
 }
@@ -146,35 +125,213 @@ void Player2::Key_Input()
 		_info.vPos.x -= cosf(_bodyAngle) * _speed;
 		_info.vPos.y -= sinf(_bodyAngle) * _speed;
 	}
+
+	if (GET_SINGLE(InputManager)->GetButton(KeyType::SpaceBar) && !_isjump)
+	{
+		_jumpSpeed = 5.f;
+
+		_isjump = true;
+	}
+}
+
+void Player2::CalcWorld()
+{
+	D3DXMATRIX matScale, matRotZ, matTrans;
+
+	D3DXMatrixScaling(&matScale, 1.f, 1.f, 1.f);
+	D3DXMatrixRotationZ(&matRotZ, _bodyAngle);
+	D3DXMatrixTranslation(&matTrans, _info.vPos.x, _info.vPos.y, 0.f);
+
+	D3DXMATRIX bodyWorld = matScale * matRotZ * matTrans;
+
+	_LT = { -25.f, -25.f, 0 };
+	_RT = { 25.f, -25.f, 0 };
+	_LD = { -25.f, 25.f, 0 };
+	_RD = { 25.f, 25.f, 0 };
+
+	D3DXVec3TransformCoord(&_LT, &_LT, &bodyWorld);
+	D3DXVec3TransformCoord(&_RT, &_RT, &bodyWorld);
+	D3DXVec3TransformCoord(&_LD, &_LD, &bodyWorld);
+	D3DXVec3TransformCoord(&_RD, &_RD, &bodyWorld);
+
+	_LT_LE = { -15.f, -15.f, 0 };
+	_RT_LE = { -5.f, -15.f, 0 };
+	_LD_LE = { -15.f, -5.f, 0 };
+	_RD_LE = { -5.f, -5.f, 0 };
+
+	D3DXVec3TransformCoord(&_LT_LE, &_LT_LE, &bodyWorld);
+	D3DXVec3TransformCoord(&_RT_LE, &_RT_LE, &bodyWorld);
+	D3DXVec3TransformCoord(&_LD_LE, &_LD_LE, &bodyWorld);
+	D3DXVec3TransformCoord(&_RD_LE, &_RD_LE, &bodyWorld);
+
+	_LT_RE = { 15.f, -15.f, 0 };
+	_RT_RE = { 5.f, -15.f, 0 };
+	_LD_RE = { 15.f, -5.f, 0 };
+	_RD_RE = { 5.f, -5.f, 0 };
+
+	D3DXVec3TransformCoord(&_LT_RE, &_LT_RE, &bodyWorld);
+	D3DXVec3TransformCoord(&_RT_RE, &_RT_RE, &bodyWorld);
+	D3DXVec3TransformCoord(&_LD_RE, &_LD_RE, &bodyWorld);
+	D3DXVec3TransformCoord(&_RD_RE, &_RD_RE, &bodyWorld);
+
+	_LT_MS = { -15.f, 5.f, 0 };
+	_RT_MS = { 15.f, 5.f, 0 };
+	_LD_MS = { -15.f, 10.f, 0 };
+	_RD_MS = { 15.f, 10.f, 0 };
+
+	D3DXVec3TransformCoord(&_LT_MS, &_LT_MS, &bodyWorld);
+	D3DXVec3TransformCoord(&_RT_MS, &_RT_MS, &bodyWorld);
+	D3DXVec3TransformCoord(&_LD_MS, &_LD_MS, &bodyWorld);
+	D3DXVec3TransformCoord(&_RD_MS, &_RD_MS, &bodyWorld);
 }
 
 void Player2::BottomCol()
 {
-	if (_LT.y > 500.f)
+	float maxY = 0;
+
+	maxY = max(maxY, _LT.y);
+	maxY = max(maxY, _RT.y);
+	maxY = max(maxY, _RD.y);
+	maxY = max(maxY, _LD.y);
+
+	if (maxY > 500.f)
 	{
 		_isjump = false;
+		
+		_jumpSpeed = 0.f;
 
-		_info.vPos.y -= _LT.y - 500.f;
+		_info.vPos.y -= maxY - 500;
 	}
+}
 
-	else if (_RT.y > 500.f)
+void Player2::SquareCol()
+{
+	const vector<Object*>* ObstacleS_List = GET_SINGLE(ObjectManager)->GetObjectList(OBSTACLE_S);
+
+	for (auto obstacle : (*ObstacleS_List))
 	{
-		_isjump = false;
+		if (GET_SINGLE(CollisionManager)->CollisionLine(this, obstacle))
+		{
+			_isjump = false;
 
-		_info.vPos.y -= _RT.y - 500.f;
+			_jumpSpeed = 0.f;
+		}
 	}
+}
 
-	else if (_RD.y > 500.f)
+void Player2::JumpRotation()
+{
+	float deltaTime = GET_SINGLE(TimeManager)->GetDeltaTime();
+
+	float angle = D3DX_PI / 180.0f;
+
+	if (_isjump)
 	{
-		_isjump = false;
-
-		_info.vPos.y -= _LD.y - 500.f;
+		_bodyAngle += angle * _RSpeed * 150 * deltaTime;
 	}
+}
 
-	else if (_LD.y > 500.f)
+void Player2::SortRotation()
+{
+	float deltaTime = GET_SINGLE(TimeManager)->GetDeltaTime();
+
+	float angle = D3DX_PI / 180.0f;
+
+	if (!_isjump)
 	{
-		_isjump = false;
+		if (_bodyAngle > (D3DX_PI * 7.f / 4.f) && _bodyAngle < 2 * D3DX_PI)
+		{
+			_bodyAngle += angle * _SRSpeed * 150 * deltaTime;
+		}
 
-		_info.vPos.y -= _RD.y - 500.f;
+		else if (_bodyAngle < (D3DX_PI/ 4.f) && _bodyAngle > 0.f)
+		{
+			_bodyAngle -= angle * _SRSpeed * 150 * deltaTime;
+		}
+
+		else if (_bodyAngle < (D3DX_PI / 2.f) && _bodyAngle > (D3DX_PI / 4.f))
+		{
+			_bodyAngle += angle * _SRSpeed * 150 * deltaTime;
+		}
+
+		else if (_bodyAngle < (D3DX_PI * 3.f / 4.f) && _bodyAngle > (D3DX_PI / 2.f))
+		{
+			_bodyAngle -= angle * _SRSpeed * 150 * deltaTime;
+		}
+
+		else if (_bodyAngle < (D3DX_PI) && _bodyAngle > (D3DX_PI * 3.f / 4.f))
+		{
+			_bodyAngle += angle * _SRSpeed * 150 * deltaTime;
+		}
+
+		else if (_bodyAngle < (D3DX_PI * 5.f / 4.f) && _bodyAngle > (D3DX_PI))
+		{
+			_bodyAngle -= angle * _SRSpeed * 150 * deltaTime;
+		}
+
+		else if (_bodyAngle < (D3DX_PI * 3.f / 2.f) && _bodyAngle > (D3DX_PI * 5.f / 4.f))
+		{
+			_bodyAngle += angle * _SRSpeed * 150 * deltaTime;
+		}
+
+		else if (_bodyAngle < (D3DX_PI * 7.f / 4.f) && _bodyAngle > (D3DX_PI * 3.f / 2.f))
+		{
+			_bodyAngle -= angle * _SRSpeed * 150 * deltaTime;
+		}
+
+		// 360도 넘으면 다시 0도로
+		if (_bodyAngle > (2 * D3DX_PI))
+			_bodyAngle -= (2 * D3DX_PI);
+
+		if(_bodyAngle < 0.f)
+			_bodyAngle += (2 * D3DX_PI);
+
+		if (_prevAngle > (D3DX_PI * 7.f / 4.f) && _prevAngle < 0.f)
+		{
+			if (_bodyAngle < (D3DX_PI / 4.f))
+				_bodyAngle = 0.f;
+		}
+
+		if (_prevAngle > 0.f && _prevAngle < (D3DX_PI / 4.f))
+		{
+			if (_bodyAngle > (D3DX_PI * 7.f / 4.f))
+				_bodyAngle = 0.f;
+		}
+
+		if (_prevAngle < (D3DX_PI / 2.f) && _prevAngle >(D3DX_PI / 4.f))
+		{
+			if (_bodyAngle > (D3DX_PI / 2.f))
+				_bodyAngle = (D3DX_PI / 2.f);
+		}
+
+		if (_prevAngle < (D3DX_PI * 3.f / 4.f) && _prevAngle > (D3DX_PI / 2.f))
+		{
+			if (_bodyAngle < (D3DX_PI / 2.f))
+				_bodyAngle = (D3DX_PI / 2.f);
+		}
+
+		if (_prevAngle < (D3DX_PI) && _prevAngle >(D3DX_PI * 3.f / 4.f))
+		{
+			if (_bodyAngle > (D3DX_PI))
+				_bodyAngle = (D3DX_PI);
+		}
+
+		if (_prevAngle < (D3DX_PI * 5.f / 4.f) && _prevAngle > (D3DX_PI))
+		{
+			if (_bodyAngle < (D3DX_PI))
+				_bodyAngle = (D3DX_PI);
+		}
+
+		if (_prevAngle < (D3DX_PI * 3.f / 2.f) && _prevAngle >(D3DX_PI * 5.f / 4.f))
+		{
+			if (_bodyAngle > (D3DX_PI * 3.f / 2.f))
+				_bodyAngle = (D3DX_PI * 3.f / 2.f);
+		}
+
+		if (_prevAngle < (D3DX_PI * 7.f / 4.f) && _prevAngle > (D3DX_PI * 3.f / 2.f))
+		{
+			if (_bodyAngle < (D3DX_PI * 3.f / 2.f))
+				_bodyAngle = (D3DX_PI * 3.f / 2.f);
+		}
 	}
 }
