@@ -24,6 +24,7 @@ void Game::Initialize()
 
 	GET_SINGLE(TimeManager)->Init();
 	GET_SINGLE(InputManager)->Init(g_hWnd);
+	GET_SINGLE(Camera)->Init();
 
 	GET_SINGLE(SceneManager)->ChangeScene(SceneType::Logo);
 
@@ -46,6 +47,7 @@ void Game::Update()
 	GET_SINGLE(TimeManager)->Update();
 	GET_SINGLE(InputManager)->Update();
 	GET_SINGLE(SceneManager)->Update();
+	GET_SINGLE(Camera)->Update();
 }
 
 void Game::Late_Update()

@@ -2,6 +2,8 @@
 #include "Stage_11.h"
 #include "Player2.h"
 #include "Square_Obstacle.h"
+#include "TriAngle_Obstacle.h"
+#include "Jump_Obstacle.h"
 
 Stage_11::Stage_11()
 {
@@ -17,24 +19,65 @@ void Stage_11::Init()
 	{
 		Object* player = new Player2;
 		player->Initialize();
-		player->SetPos(50.f, 470.f);
+		player->SetPos(150.f, 470.f);
 		GET_SINGLE(ObjectManager)->Add(PLAYER, player);
 	}
 
 	{
-		Object* SO = new Square_Obstacle;
+		Object*SO = new TriAngle_Obstacle;
 		SO->Initialize();
+		SO->SetPos(650.f, 475.f);
+		SO->SetSize(50.f, 50.f);
+		GET_SINGLE(ObjectManager)->Add(OBSTACLE_T, SO);
+
+		SO = new Square_Obstacle;
+		SO->Initialize();
+		SO->SetPos(700.f, 475.f);
+		GET_SINGLE(ObjectManager)->Add(OBSTACLE_S, SO);
+
+		SO = new Jump_Obstacle;
+		SO->Initialize();
+		SO->SetPos(700.f, 440.f);
+		GET_SINGLE(ObjectManager)->Add(OBSTACLE_J, SO);
+
+		SO = new Square_Obstacle;
+		SO->Initialize();
+		SO->SetPos(950.f, 275.f);
 		GET_SINGLE(ObjectManager)->Add(OBSTACLE_S, SO);
 
 		SO = new Square_Obstacle;
 		SO->Initialize();
-		SO->SetPos(300.f, 350.f);
+		SO->SetPos(1200.f, 275.f);
 		GET_SINGLE(ObjectManager)->Add(OBSTACLE_S, SO);
 
-		SO = new Square_Obstacle;
+		SO = new Jump_Obstacle;
 		SO->Initialize();
-		SO->SetPos(450.f, 250.f);
-		GET_SINGLE(ObjectManager)->Add(OBSTACLE_S, SO);
+		SO->SetPos(1550.f, 490.f);
+		GET_SINGLE(ObjectManager)->Add(OBSTACLE_J, SO);
+
+		SO = new TriAngle_Obstacle;
+		SO->Initialize();
+		SO->SetPos(1600.f, 475.f);
+		SO->SetSize(50.f, 50.f);
+		GET_SINGLE(ObjectManager)->Add(OBSTACLE_T, SO);
+
+		SO = new TriAngle_Obstacle;
+		SO->Initialize();
+		SO->SetPos(1650.f, 475.f);
+		SO->SetSize(50.f, 50.f);
+		GET_SINGLE(ObjectManager)->Add(OBSTACLE_T, SO);
+
+		SO = new TriAngle_Obstacle;
+		SO->Initialize();
+		SO->SetPos(1700.f, 475.f);
+		SO->SetSize(50.f, 50.f);
+		GET_SINGLE(ObjectManager)->Add(OBSTACLE_T, SO);
+
+		SO = new TriAngle_Obstacle;
+		SO->Initialize();
+		SO->SetPos(1750.f, 475.f);
+		SO->SetSize(50.f, 50.f);
+		GET_SINGLE(ObjectManager)->Add(OBSTACLE_T, SO);
 	}
 }
 

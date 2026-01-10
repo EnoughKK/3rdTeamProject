@@ -17,7 +17,7 @@ void Player2::Initialize()
 
 	_info.vLook = { 1.f, 0.f, 0.f };
 
-	_speed = 2.0f;
+	_speed = 5.f;
 
 	_size = { 50.f, 50.f, 0 };
 
@@ -57,9 +57,9 @@ int Player2::Update()
 
 	CalcWorld();
 
-	SquareCol();
-
 	BottomCol();
+
+	SquareCol();
 
 	CalcWorld();
 
@@ -72,29 +72,31 @@ void Player2::Late_Update()
 
 void Player2::Render(HDC hDC)
 {
-	MoveToEx(hDC, _LT.x, _LT.y, nullptr);
-	LineTo(hDC, _RT.x, _RT.y);
-	LineTo(hDC, _RD.x, _RD.y);
-	LineTo(hDC, _LD.x, _LD.y);
-	LineTo(hDC, _LT.x, _LT.y);
+	D3DXVECTOR3 cameraPos = GET_SINGLE(Camera)->GetCameraPos();
 
-	MoveToEx(hDC, _LT_LE.x, _LT_LE.y, nullptr);
-	LineTo(hDC, _RT_LE.x, _RT_LE.y);
-	LineTo(hDC, _RD_LE.x, _RD_LE.y);
-	LineTo(hDC, _LD_LE.x, _LD_LE.y);
-	LineTo(hDC, _LT_LE.x, _LT_LE.y);
+	MoveToEx(hDC, _LT.x - cameraPos.x, _LT.y, nullptr);
+	LineTo(hDC, _RT.x - cameraPos.x, _RT.y);
+	LineTo(hDC, _RD.x - cameraPos.x, _RD.y);
+	LineTo(hDC, _LD.x - cameraPos.x, _LD.y);
+	LineTo(hDC, _LT.x - cameraPos.x, _LT.y);
 
-	MoveToEx(hDC, _LT_RE.x, _LT_RE.y, nullptr);
-	LineTo(hDC, _RT_RE.x, _RT_RE.y);
-	LineTo(hDC, _RD_RE.x, _RD_RE.y);
-	LineTo(hDC, _LD_RE.x, _LD_RE.y);
-	LineTo(hDC, _LT_RE.x, _LT_RE.y);
+	MoveToEx(hDC, _LT_LE.x - cameraPos.x, _LT_LE.y, nullptr);
+	LineTo(hDC, _RT_LE.x - cameraPos.x, _RT_LE.y);
+	LineTo(hDC, _RD_LE.x - cameraPos.x, _RD_LE.y);
+	LineTo(hDC, _LD_LE.x - cameraPos.x, _LD_LE.y);
+	LineTo(hDC, _LT_LE.x - cameraPos.x, _LT_LE.y);
 
-	MoveToEx(hDC, _LT_MS.x, _LT_MS.y, nullptr);
-	LineTo(hDC, _RT_MS.x, _RT_MS.y);
-	LineTo(hDC, _RD_MS.x, _RD_MS.y);
-	LineTo(hDC, _LD_MS.x, _LD_MS.y);
-	LineTo(hDC, _LT_MS.x, _LT_MS.y);
+	MoveToEx(hDC, _LT_RE.x - cameraPos.x, _LT_RE.y, nullptr);
+	LineTo(hDC, _RT_RE.x - cameraPos.x, _RT_RE.y);
+	LineTo(hDC, _RD_RE.x - cameraPos.x, _RD_RE.y);
+	LineTo(hDC, _LD_RE.x - cameraPos.x, _LD_RE.y);
+	LineTo(hDC, _LT_RE.x - cameraPos.x, _LT_RE.y);
+
+	MoveToEx(hDC, _LT_MS.x - cameraPos.x, _LT_MS.y, nullptr);
+	LineTo(hDC, _RT_MS.x - cameraPos.x, _RT_MS.y);
+	LineTo(hDC, _RD_MS.x - cameraPos.x, _RD_MS.y);
+	LineTo(hDC, _LD_MS.x - cameraPos.x, _LD_MS.y);
+	LineTo(hDC, _LT_MS.x - cameraPos.x, _LT_MS.y);
 }
 
 void Player2::Release()
@@ -128,7 +130,7 @@ void Player2::Key_Input()
 
 	if (GET_SINGLE(InputManager)->GetButton(KeyType::SpaceBar) && !_isjump)
 	{
-		_jumpSpeed = 5.f;
+		_jumpSpeed = 4.5f;
 
 		_isjump = true;
 	}
@@ -206,15 +208,50 @@ void Player2::BottomCol()
 
 void Player2::SquareCol()
 {
-	const vector<Object*>* ObstacleS_List = GET_SINGLE(ObjectManager)->GetObjectList(OBSTACLE_S);
+	const vector<Object*>* Obstacle_List = GET_SINGLE(ObjectManager)->GetObjectList(OBSTACLE_S);
 
-	for (auto obstacle : (*ObstacleS_List))
+	// 사각형 발판
+	for (auto obstacle : (*Obstacle_List))
 	{
 		if (GET_SINGLE(CollisionManager)->CollisionLine(this, obstacle))
 		{
 			_isjump = false;
 
 			_jumpSpeed = 0.f;
+		}
+
+		GET_SINGLE(CollisionManager)->Collision_Left(this, obstacle);
+
+		if(GET_SINGLE(CollisionManager)->Collision_Down(this, obstacle))
+			_jumpSpeed = 0.f;
+	}
+
+	// 삼각형 장애물
+	Obstacle_List = GET_SINGLE(ObjectManager)->GetObjectList(OBSTACLE_T);
+
+	for (auto obstacle : (*Obstacle_List))
+	{
+		if (GET_SINGLE(CollisionManager)->Collision_Tri(this, obstacle))
+		{
+			_isjump = false;
+
+			_jumpSpeed = 0.f;
+
+			_info.vPos = { 150.f, 470.f, 0 };
+
+			_bodyAngle = 0.f;
+		}
+	}
+
+	Obstacle_List = GET_SINGLE(ObjectManager)->GetObjectList(OBSTACLE_J);
+
+	for (auto obstacle : (*Obstacle_List))
+	{
+		if (GET_SINGLE(CollisionManager)->OnlyCheck(this, obstacle))
+		{
+			_isjump = true;
+
+			_jumpSpeed = 6.5f;
 		}
 	}
 }
