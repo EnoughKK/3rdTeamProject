@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Stage_11.h"
 #include "Player2.h"
+#include "Square_Obstacle.h"
 
 Stage_11::Stage_11()
 {
@@ -16,8 +17,24 @@ void Stage_11::Init()
 	{
 		Object* player = new Player2;
 		player->Initialize();
-		player->SetPos(WINCX/2, WINCY/2);
+		player->SetPos(50.f, 470.f);
 		GET_SINGLE(ObjectManager)->Add(PLAYER, player);
+	}
+
+	{
+		Object* SO = new Square_Obstacle;
+		SO->Initialize();
+		GET_SINGLE(ObjectManager)->Add(OBSTACLE_S, SO);
+
+		SO = new Square_Obstacle;
+		SO->Initialize();
+		SO->SetPos(300.f, 350.f);
+		GET_SINGLE(ObjectManager)->Add(OBSTACLE_S, SO);
+
+		SO = new Square_Obstacle;
+		SO->Initialize();
+		SO->SetPos(450.f, 250.f);
+		GET_SINGLE(ObjectManager)->Add(OBSTACLE_S, SO);
 	}
 }
 

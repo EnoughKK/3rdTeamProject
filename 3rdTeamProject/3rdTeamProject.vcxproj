@@ -161,6 +161,7 @@
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="ScrollManager.h" />
+    <ClInclude Include="Square_Obstacle.h" />
     <ClInclude Include="Stage_01.h" />
     <ClInclude Include="Stage_11.h" />
     <ClInclude Include="Stage_21.h" />
@@ -196,6 +197,7 @@
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="ScrollManager.cpp" />
+    <ClCompile Include="Square_Obstacle.cpp" />
     <ClCompile Include="Stage_01.cpp" />
     <ClCompile Include="Stage_11.cpp" />
     <ClCompile Include="Stage_21.cpp" />
