@@ -17,23 +17,29 @@ void Stage_11::Init()
 	{
 		Object* player = new Player2;
 		player->Initialize();
-		player->SetPos(50.f, 470.f);
+		player->SetPos(150.f, 470.f);
 		GET_SINGLE(ObjectManager)->Add(PLAYER, player);
 	}
 
 	{
 		Object* SO = new Square_Obstacle;
 		SO->Initialize();
+		SO->SetPos(500.f, 400.f);
 		GET_SINGLE(ObjectManager)->Add(OBSTACLE_S, SO);
 
 		SO = new Square_Obstacle;
 		SO->Initialize();
-		SO->SetPos(300.f, 350.f);
+		SO->SetPos(700.f, 300.f);
 		GET_SINGLE(ObjectManager)->Add(OBSTACLE_S, SO);
 
 		SO = new Square_Obstacle;
 		SO->Initialize();
-		SO->SetPos(450.f, 250.f);
+		SO->SetPos(900.f, 200.f);
+		GET_SINGLE(ObjectManager)->Add(OBSTACLE_S, SO);
+
+		SO = new Square_Obstacle;
+		SO->Initialize();
+		SO->SetPos(450.f, 450.f);
 		GET_SINGLE(ObjectManager)->Add(OBSTACLE_S, SO);
 	}
 }

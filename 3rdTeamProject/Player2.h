@@ -25,7 +25,7 @@ private:
 	void	SortRotation();
 
 private:
-	bool _isjump = true;
+	bool _isjump = false;
 	float _jumpSpeed = 0.f;
 	float _RSpeed = 1.8f;
 	float _SRSpeed = 4.f;

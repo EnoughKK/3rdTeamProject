@@ -17,7 +17,7 @@ void Player2::Initialize()
 
 	_info.vLook = { 1.f, 0.f, 0.f };
 
-	_speed = 2.0f;
+	_speed = 4.0f;
 
 	_size = { 50.f, 50.f, 0 };
 
@@ -72,29 +72,31 @@ void Player2::Late_Update()
 
 void Player2::Render(HDC hDC)
 {
-	MoveToEx(hDC, _LT.x, _LT.y, nullptr);
-	LineTo(hDC, _RT.x, _RT.y);
-	LineTo(hDC, _RD.x, _RD.y);
-	LineTo(hDC, _LD.x, _LD.y);
-	LineTo(hDC, _LT.x, _LT.y);
+	D3DXVECTOR3 cameraPos = GET_SINGLE(Camera)->GetCameraPos();
 
-	MoveToEx(hDC, _LT_LE.x, _LT_LE.y, nullptr);
-	LineTo(hDC, _RT_LE.x, _RT_LE.y);
-	LineTo(hDC, _RD_LE.x, _RD_LE.y);
-	LineTo(hDC, _LD_LE.x, _LD_LE.y);
-	LineTo(hDC, _LT_LE.x, _LT_LE.y);
+	MoveToEx(hDC, _LT.x - cameraPos.x, _LT.y, nullptr);
+	LineTo(hDC, _RT.x - cameraPos.x, _RT.y);
+	LineTo(hDC, _RD.x - cameraPos.x, _RD.y);
+	LineTo(hDC, _LD.x - cameraPos.x, _LD.y);
+	LineTo(hDC, _LT.x - cameraPos.x, _LT.y);
 
-	MoveToEx(hDC, _LT_RE.x, _LT_RE.y, nullptr);
-	LineTo(hDC, _RT_RE.x, _RT_RE.y);
-	LineTo(hDC, _RD_RE.x, _RD_RE.y);
-	LineTo(hDC, _LD_RE.x, _LD_RE.y);
-	LineTo(hDC, _LT_RE.x, _LT_RE.y);
+	MoveToEx(hDC, _LT_LE.x - cameraPos.x, _LT_LE.y, nullptr);
+	LineTo(hDC, _RT_LE.x - cameraPos.x, _RT_LE.y);
+	LineTo(hDC, _RD_LE.x - cameraPos.x, _RD_LE.y);
+	LineTo(hDC, _LD_LE.x - cameraPos.x, _LD_LE.y);
+	LineTo(hDC, _LT_LE.x - cameraPos.x, _LT_LE.y);
 
-	MoveToEx(hDC, _LT_MS.x, _LT_MS.y, nullptr);
-	LineTo(hDC, _RT_MS.x, _RT_MS.y);
-	LineTo(hDC, _RD_MS.x, _RD_MS.y);
-	LineTo(hDC, _LD_MS.x, _LD_MS.y);
-	LineTo(hDC, _LT_MS.x, _LT_MS.y);
+	MoveToEx(hDC, _LT_RE.x - cameraPos.x, _LT_RE.y, nullptr);
+	LineTo(hDC, _RT_RE.x - cameraPos.x, _RT_RE.y);
+	LineTo(hDC, _RD_RE.x - cameraPos.x, _RD_RE.y);
+	LineTo(hDC, _LD_RE.x - cameraPos.x, _LD_RE.y);
+	LineTo(hDC, _LT_RE.x - cameraPos.x, _LT_RE.y);
+
+	MoveToEx(hDC, _LT_MS.x - cameraPos.x, _LT_MS.y, nullptr);
+	LineTo(hDC, _RT_MS.x - cameraPos.x, _RT_MS.y);
+	LineTo(hDC, _RD_MS.x - cameraPos.x, _RD_MS.y);
+	LineTo(hDC, _LD_MS.x - cameraPos.x, _LD_MS.y);
+	LineTo(hDC, _LT_MS.x - cameraPos.x, _LT_MS.y);
 }
 
 void Player2::Release()

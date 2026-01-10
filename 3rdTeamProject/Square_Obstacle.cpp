@@ -26,7 +26,11 @@ void Square_Obstacle::Late_Update()
 
 void Square_Obstacle::Render(HDC hDC)
 {
-	Utils::DrawRect(hDC, _info.vPos, _size.x, _size.y);
+	D3DXVECTOR3 cameraPos = GET_SINGLE(Camera)->GetCameraPos();
+
+	D3DXVECTOR3 drawPos = { _info.vPos.x - cameraPos.x, _info.vPos.y, _info.vPos.z};
+
+	Utils::DrawRect(hDC, drawPos, _size.x, _size.y);
 }
 
 void Square_Obstacle::Release()
