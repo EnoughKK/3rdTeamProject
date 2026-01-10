@@ -200,3 +200,44 @@ bool CollisionManager::CollisionLine(Object* Dst, Object* Src)
 
 	return false;
 }
+
+bool CollisionManager::Collision_Left(Object* Dst, Object* Src)
+{
+	float	fWidth(0.f), fHeight(0.f);
+
+	if (CheckRect(Dst, Src, &fWidth, &fHeight))
+	{
+		if (fWidth <= fHeight)
+		{
+			// 좌 충돌
+			if (Dst->GetPos().x < Src->GetPos().x)
+			{
+				Dst->SetPos(Dst->GetPos().x - fWidth, (Dst->GetPos().y));
+
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+bool CollisionManager::Collision_Down(Object* Dst, Object* Src)
+{
+	float	fWidth(0.f), fHeight(0.f);
+
+	if (CheckRect(Dst, Src, &fWidth, &fHeight))
+	{
+		// 하 충돌
+		if (fWidth > fHeight)
+		{
+			if (Dst->GetPos().y > Src->GetPos().y)
+			{
+				Dst->SetPos(Dst->GetPos().x, (Dst->GetPos().y + fHeight));
+
+				return true;
+			}
+		}
+	}
+
+	return false;
+}

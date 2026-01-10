@@ -11,5 +11,9 @@ class CollisionManager
 	void Collision_Rect(Object* Dst, Object* Src);
 
 	bool CollisionLine(Object* Dst, Object* Src);
+
+	bool Collision_Left(Object* Dst, Object* Src);
+
+	bool Collision_Down(Object* Dst, Object* Src);
 };
 

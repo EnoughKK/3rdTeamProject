@@ -216,6 +216,11 @@ void Player2::SquareCol()
 
 			_jumpSpeed = 0.f;
 		}
+
+		GET_SINGLE(CollisionManager)->Collision_Left(this, obstacle);
+
+		if(GET_SINGLE(CollisionManager)->Collision_Down(this, obstacle))
+			_jumpSpeed = 0.f;
 	}
 }
 
