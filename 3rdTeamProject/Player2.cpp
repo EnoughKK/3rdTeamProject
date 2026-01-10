@@ -50,6 +50,9 @@ int Player2::Update()
 	_info.vPos.y -= _jumpSpeed * 3;
 	_info.vPos.x += _speed * deltaTime * 70.f;
 
+	if (_jumpSpeed < -1.f)
+		_isjump = true;
+
 	JumpRotation();
 
 	CalcWorld();
@@ -195,7 +198,7 @@ void Player2::BottomCol()
 	{
 		_isjump = false;
 		
-_jumpSpeed = 0.f;
+		_jumpSpeed = 0.f;
 
 		_info.vPos.y -= maxY - 500;
 	}
@@ -222,7 +225,7 @@ void Player2::JumpRotation()
 
 	float angle = D3DX_PI / 180.0f;
 
-	if (_isjump || _jumpSpeed < -1.f)
+	if (_isjump)
 	{
 		_bodyAngle += angle * _RSpeed * 150 * deltaTime;
 	}
