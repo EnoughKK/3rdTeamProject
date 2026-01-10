@@ -72,6 +72,12 @@ void Stage_11::Init()
 		SO->SetPos(1700.f, 475.f);
 		SO->SetSize(50.f, 50.f);
 		GET_SINGLE(ObjectManager)->Add(OBSTACLE_T, SO);
+
+		SO = new TriAngle_Obstacle;
+		SO->Initialize();
+		SO->SetPos(1750.f, 475.f);
+		SO->SetSize(50.f, 50.f);
+		GET_SINGLE(ObjectManager)->Add(OBSTACLE_T, SO);
 	}
 }
 
