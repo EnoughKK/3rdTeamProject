@@ -22,3 +22,11 @@ enum OBJID
 	MAZE,
 	OBJ_END
 };
+
+enum DIRECTION {
+	DIR_UP,
+	DIR_DOWN,
+	DIR_LEFT,
+	DIR_RIGHT,
+	DIR_END
+};
