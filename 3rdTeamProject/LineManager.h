@@ -9,6 +9,9 @@ class LineManager {
 	DECLARE_SINGLE(LineManager)
 
 public:
+	~LineManager();
+
+public:
 	void Initialize();
 	void MakeLine(FLOAT _VX1, FLOAT _VY1, FLOAT _VX2, FLOAT _VY2)
 	{
@@ -24,6 +27,7 @@ public:
 		m_Linelist.push_back(new Line{ _POSX , _POSY , _POSX , _POSY + _HGT });
 		m_Linelist.push_back(new Line{ _POSX + _WTH , _POSY , _POSX + _WTH , _POSY + _HGT });
 	}
+	void Release();
 
 private:
 	list<Line*>		m_Linelist;

@@ -81,8 +81,6 @@ void LightObject::Render(HDC DC) {
 		MoveToEx(DC, Player->Get_Info().vPos.x + ScrollManager::GetInstance()->Get_ScrollX(), Player->Get_Info().vPos.y + ScrollManager::GetInstance()->Get_ScrollY(), nullptr);
 		LineVertex = { Player->Get_Info().vPos.x + ScrollManager::GetInstance()->Get_ScrollX(), Player->Get_Info().vPos.y + ScrollManager::GetInstance()->Get_ScrollY(), 0.f };
 	}
-	
-	
 }
 void LightObject::Release() {
 

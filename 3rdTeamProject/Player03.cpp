@@ -76,6 +76,11 @@ int Player03::Update() {
 	if (200 > PlayerPositionValue.y + ScrollManager::GetInstance()->Get_ScrollY()) {
 		ScrollManager::GetInstance()->Set_ScrollY(10);
 	}
+
+	if (InputManager::GetInstance()->GetButtonDown(KeyType::LeftMouse)) {
+		ObjectManager::GetInstance()->Add(OBJID::PLAYER_BULLET, new Bullet);
+		ObjectManager::GetInstance()->GetObjectList(OBJID::PLAYER_BULLET)->back()->Initialize();
+	}
     return 0;
 }
 void Player03::Late_Update() {
@@ -117,10 +122,7 @@ void Player03::Render(HDC DC) {
 	D3DXVec3TransformCoord(&DotPosLT, &DotPosLT, &_info.matWorld);
 	D3DXVec3TransformCoord(&DotPosLB, &DotPosLB, &_info.matWorld);
 
-	if (InputManager::GetInstance()->GetButtonDown(KeyType::LeftMouse)) {
-		ObjectManager::GetInstance()->Add(OBJID::PLAYER_BULLET, new Bullet);
-		ObjectManager::GetInstance()->GetObjectList(OBJID::PLAYER_BULLET)->back()->Initialize();
-	}
+	
 
 	MoveToEx(DC, DotPosRT.x + ScrollManager::GetInstance()->Get_ScrollX(), DotPosRT.y + ScrollManager::GetInstance()->Get_ScrollY(), nullptr);
 	LineTo(DC,   DotPosRB.x	+ ScrollManager::GetInstance()->Get_ScrollX(), DotPosRB.y + ScrollManager::GetInstance()->Get_ScrollY());

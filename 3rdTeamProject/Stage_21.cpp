@@ -58,6 +58,5 @@ void Stage_21::Render(HDC DC) {
     GET_SINGLE(ObjectManager)->Render(DC);
 }
 
-void Stage_21::Release()
-{
+void Stage_21::Release() {
 }

@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "Enemy.h"
+#include "ScrollManager.h"
 
 EnemyObject::EnemyObject()  { }
 EnemyObject::~EnemyObject() { Release(); }
@@ -17,7 +18,7 @@ int EnemyObject::Update() {
 	D3DXVec3Normalize(&_info.vDir, &_info.vDir);
 
 	if (_info.vPos.y < Player->Get_Info().vPos.y) {
-		AngleFromPlayer = D3DXToDegree(acosf(D3DXVec3Dot(&_info.vLook, &_info.vDir)));
+		AngleFromPlayer =  D3DXToDegree(acosf(D3DXVec3Dot(&_info.vLook, &_info.vDir)));
 	}
 	else if (_info.vPos.y >= Player->Get_Info().vPos.y) {
 		AngleFromPlayer = -D3DXToDegree(acosf(D3DXVec3Dot(&_info.vLook, &_info.vDir)));
@@ -35,9 +36,9 @@ void EnemyObject::Render(HDC DC) {
 
 	_info.vPos = { 0.f, 0.f, 0.f };
 
-	D3DXVECTOR3 TriVertex01 = { _info.vPos.x + 5.f, _info.vPos.y , 1.f };
-	D3DXVECTOR3 TriVertex02 = { _info.vPos.x - 4.f, _info.vPos.y + 3.f, 1.f };
-	D3DXVECTOR3 TriVertex03 = { _info.vPos.x - 4.f, _info.vPos.y - 3.f, 1.f };
+	//D3DXVECTOR3 TriVertex01 = { _info.vPos.x + 5.f, _info.vPos.y      , 1.f };
+	//D3DXVECTOR3 TriVertex02 = { _info.vPos.x - 4.f, _info.vPos.y + 3.f, 1.f };
+	//D3DXVECTOR3 TriVertex03 = { _info.vPos.x - 4.f, _info.vPos.y - 3.f, 1.f };
 
 	D3DXMatrixScaling(&ScaleMatrix, 5.f, 5.f, 5.f);
 	D3DXMatrixRotationZ(&RotationMatrix, D3DXToRadian(AngleFromPlayer));
@@ -46,17 +47,22 @@ void EnemyObject::Render(HDC DC) {
 	_info.matWorld = ScaleMatrix * RotationMatrix * PositionMatrix;
 
 	D3DXVec3TransformCoord(&_info.vPos, &_info.vPos, &_info.matWorld);
-	D3DXVec3TransformCoord(&TriVertex01, &TriVertex01, &_info.matWorld);
-	D3DXVec3TransformCoord(&TriVertex02, &TriVertex02, &_info.matWorld);
-	D3DXVec3TransformCoord(&TriVertex03, &TriVertex03, &_info.matWorld);
+	//D3DXVec3TransformCoord(&TriVertex01, &TriVertex01, &_info.matWorld);
+	//D3DXVec3TransformCoord(&TriVertex02, &TriVertex02, &_info.matWorld);
+	//D3DXVec3TransformCoord(&TriVertex03, &TriVertex03, &_info.matWorld);
 
-	MoveToEx(DC, _info.vPos.x, _info.vPos.y, nullptr);
-	LineTo(DC, _info.vPos.x + 50 * _info.vDir.x, _info.vPos.y + 50 * _info.vDir.y);
+	//MoveToEx(DC, _info.vPos.x + ScrollManager::GetInstance()->Get_ScrollX(), _info.vPos.y + ScrollManager::GetInstance()->Get_ScrollY(), nullptr);
+	//LineTo(DC, _info.vPos.x + 50 * _info.vDir.x + ScrollManager::GetInstance()->Get_ScrollX(), _info.vPos.y + 50 * _info.vDir.y + ScrollManager::GetInstance()->Get_ScrollY());
+	//
+	//MoveToEx(DC, TriVertex01.x + ScrollManager::GetInstance()->Get_ScrollX(), TriVertex01.y + ScrollManager::GetInstance()->Get_ScrollY(), nullptr);
+	//LineTo(DC, TriVertex02.x + ScrollManager::GetInstance()->Get_ScrollX(), TriVertex02.y + ScrollManager::GetInstance()->Get_ScrollY());
+	//LineTo(DC, TriVertex03.x + ScrollManager::GetInstance()->Get_ScrollX(), TriVertex03.y + ScrollManager::GetInstance()->Get_ScrollY());
+	//LineTo(DC, TriVertex01.x + ScrollManager::GetInstance()->Get_ScrollX(), TriVertex01.y + ScrollManager::GetInstance()->Get_ScrollY());
 
-	MoveToEx(DC, TriVertex01.x, TriVertex01.y, nullptr);
-	LineTo(DC, TriVertex02.x, TriVertex02.y);
-	LineTo(DC, TriVertex03.x, TriVertex03.y);
-	LineTo(DC, TriVertex01.x, TriVertex01.y);
+	Rectangle(DC, _info.vPos.x + ScrollManager::GetInstance()->Get_ScrollX() - 15.f,
+		_info.vPos.y + ScrollManager::GetInstance()->Get_ScrollY() -15.f,
+		_info.vPos.x + ScrollManager::GetInstance()->Get_ScrollX() +15.f,
+		_info.vPos.y + ScrollManager::GetInstance()->Get_ScrollY() +15.f);
 
 	Get_HPBar(DC);
 }
@@ -64,9 +70,8 @@ void EnemyObject::Release() {
 
 }
 void EnemyObject::Get_HPBar(HDC DC) {
-	Rectangle(DC, _info.vPos.x - 30.f, _info.vPos.y - 40.f, _info.vPos.x + 30.f, _info.vPos.y - 30.f);
-
-	// InLine
+	Rectangle(DC, _info.vPos.x - 30.f + ScrollManager::GetInstance()->Get_ScrollX(), _info.vPos.y - 40.f + ScrollManager::GetInstance()->Get_ScrollY(),
+				  _info.vPos.x + 30.f + ScrollManager::GetInstance()->Get_ScrollX(), _info.vPos.y - 30.f + ScrollManager::GetInstance()->Get_ScrollY());
 
 	HPEN myPen = CreatePen(PS_SOLID, 0, RGB(0, 0, 0));
 	HGDIOBJ oldPen = SelectObject(DC, myPen);
@@ -74,7 +79,8 @@ void EnemyObject::Get_HPBar(HDC DC) {
 	HBRUSH myBrush = CreateSolidBrush(RGB(255, 0, 0));
 	HBRUSH oldBrush = (HBRUSH)SelectObject(DC, myBrush);
 
-	Rectangle(DC, _info.vPos.x - 30.f, _info.vPos.y - 40.f, _info.vPos.x - 30.f + EnemyHP, _info.vPos.y - 30.f);
+	Rectangle(DC, _info.vPos.x - 30.f + ScrollManager::GetInstance()->Get_ScrollX(), _info.vPos.y - 40.f + ScrollManager::GetInstance()->Get_ScrollY(),
+		_info.vPos.x - 30.f + EnemyHP + ScrollManager::GetInstance()->Get_ScrollX(), _info.vPos.y - 30.f + ScrollManager::GetInstance()->Get_ScrollY());
 
 	SelectObject(DC, oldBrush);
 	DeleteObject(myBrush);
