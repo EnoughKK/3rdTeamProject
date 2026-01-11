@@ -83,7 +83,7 @@ void EnemyObject::Render(HDC DC) {
 		D3DXVec3TransformCoord(&Posin02S, &Posin02S, &_info.matWorld);
 		D3DXVec3TransformCoord(&Posin03S, &Posin03S, &_info.matWorld);
 
-		HPEN myPen = CreatePen(PS_SOLID, 5, RGB(0, 0, 0));
+		HPEN myPen = CreatePen(PS_SOLID, 5, RGB(20, 20, 20));
 		HPEN oldPen = (HPEN)SelectObject(DC, myPen);
 
 		MoveToEx(DC, Vertex01.x + ScrollManager::GetInstance()->Get_ScrollX(), Vertex01.y + ScrollManager::GetInstance()->Get_ScrollY(), nullptr);

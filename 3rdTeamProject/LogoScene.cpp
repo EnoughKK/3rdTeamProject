@@ -22,7 +22,7 @@ void LogoScene::Init()
     button->SetPos(350, 300);
     GET_SINGLE(ObjectManager)->Add(BUTTON, button);
 
-    button = new Button(L"Stage_21", SceneType::Stage_21);
+    button = new Button(L"CQB", SceneType::Stage_21);
     button->Initialize();
     button->SetPos(350, 400);
     GET_SINGLE(ObjectManager)->Add(BUTTON, button);
