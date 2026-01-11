@@ -15,9 +15,12 @@ void CollisionManager::Collision_Line_Player(Object* player, vector<pair<D3DXVEC
 		}
 		float playerX = player->GetPos().x;
 		float playerY = player->GetPos().y;
+		
 		float slope = (float)(line.second.y - line.first.y) / (line.second.x - line.first.x);
 		float lineY = slope * (playerX - line.first.x) + line.first.y;
 		float radius = dynamic_cast<Player1*>(player)->GetRadius();
+		D3DXVECTOR3 curPos = dynamic_cast<Player1*>(player)->GetPos();
+		D3DXVECTOR3 prevPos = dynamic_cast<Player1*>(player)->GetPrevPos();
 		D3DXVECTOR3 midPoint = player->GetPos();
 		D3DXVECTOR3 linePoint = { playerX, lineY ,0};
 		D3DXVECTOR3 slopeVec = line.second - line.first;
@@ -25,10 +28,18 @@ void CollisionManager::Collision_Line_Player(Object* player, vector<pair<D3DXVEC
 		// 라인 법선 벡터
 		D3DXVECTOR3 normalVec = D3DXVECTOR3(-slopeVec.y, slopeVec.x, 0);
 		D3DXVec3Normalize(&normalVec, &normalVec);
-		normalVec = normalVec * radius ;
+		D3DXVECTOR3 lineToPlayer = curPos - linePoint;
+
+		float distance = D3DXVec3Dot(&lineToPlayer, &normalVec);
+		float penetration = radius - fabsf(distance);
+		normalVec = normalVec* radius;
 		float minY = 0;
 		float maxY = 0;
-	
+		//#ifdef _DEBUG
+		//
+		//		cout<< prevPos.x << '\t' << curPos.x << endl;
+		//
+		//#endif // _DEBUG
 		if (line.first.y < line.second.y) {
 			minY = line.first.y;
 			maxY = line.second.y;
@@ -38,12 +49,25 @@ void CollisionManager::Collision_Line_Player(Object* player, vector<pair<D3DXVEC
 			maxY = line.first.y;
 		}
 
-		if ((playerX > line.first.x &&
-			playerX < line.second.x &&
-			fabsf(midPoint.y  - lineY) <= radius)
-			) {
-			player->SetPos(playerX - normalVec.x, lineY - normalVec.y);
+		/*if (line.first.x == line.second.x && prevPos.x <= line.first.x && curPos.x >= line.first.x && curPos.y >= minY && curPos.y <= maxY) {
+			if (slope < 0) {
+				player->SetPos(line.first.x -5, lineY - normalVec.y);
+			}
+			else if (slope > 0) {
+				player->SetPos(line.first.x+ 5, lineY - normalVec.y);
 
+			}
+		}else */if ((playerX > line.first.x &&
+			playerX < line.second.x &&
+			fabsf(midPoint.y - lineY) <= radius)) {
+			if (line.first.x == lines[lines.size() - 4].first.x ||
+				line.first.x == lines[lines.size() - 3].first.x || 
+				line.first.x == lines[lines.size() - 2].first.x || 
+				line.first.x == lines[lines.size() - 1].first.x ) {
+				GET_SINGLE(SceneManager)->ChangeScene(SceneType::Logo);
+				break;
+			}
+			player->SetPos(playerX - normalVec.x, lineY - normalVec.y);
 		}
 	}
 
