@@ -12,5 +12,12 @@ public:
 	virtual void Late_Update() override;
 	virtual void Render(HDC hdc) override;
 	virtual void Release() override;
+
+	void SetStop() { _isStop = true; }
+
+private:
+	void mapInit();
+
+	bool _isStop = false;
 };
 

@@ -141,6 +141,7 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="Defines.h" />
+    <ClInclude Include="End_Potal.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Enums.h" />
     <ClInclude Include="framework.h" />
@@ -169,6 +170,7 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="TimeManager.h" />
     <ClInclude Include="TriAngle_Obstacle.h" />
+    <ClInclude Include="TriAngle_Obstacle2.h" />
     <ClInclude Include="Types.h" />
     <ClInclude Include="Utils.h" />
     <ClInclude Include="Wall.h" />
@@ -179,6 +181,7 @@
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CollisionManager.cpp" />
+    <ClCompile Include="End_Potal.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="InputManager.cpp" />
@@ -206,6 +209,7 @@
     <ClCompile Include="Stage_21.cpp" />
     <ClCompile Include="TimeManager.cpp" />
     <ClCompile Include="TriAngle_Obstacle.cpp" />
+    <ClCompile Include="TriAngle_Obstacle2.cpp" />
     <ClCompile Include="Utils.cpp" />
     <ClCompile Include="Wall.cpp" />
   </ItemGroup>

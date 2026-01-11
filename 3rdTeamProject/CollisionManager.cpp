@@ -209,7 +209,7 @@ bool CollisionManager::Collision_Left(Object* Dst, Object* Src)
 
 	if (CheckRect(Dst, Src, &fWidth, &fHeight))
 	{
-		if (fWidth <= fHeight)
+		if (fWidth <= fHeight/2)
 		{
 			// ÁÂ Ãæµ¹
 			if (Dst->GetPos().x < Src->GetPos().x)
@@ -269,6 +269,9 @@ bool CollisionManager::Collision_Tri(Object* Dst, Object* Src)
 
 		return true;
 	}
+
+	if(Collision_Left(Dst, Src))
+		return true;
 
 	return false;
 }
