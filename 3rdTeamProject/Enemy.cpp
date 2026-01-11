@@ -2,13 +2,14 @@
 #include "Enemy.h"
 #include "ScrollManager.h"
 #include "Bullet.h"
+#include "Player03.h"
 
 EnemyObject::EnemyObject()  { }
 EnemyObject::~EnemyObject() { Release(); }
 
 void EnemyObject::Initialize() {
 	_info.vLook = { 1.f, 0.f, 0.f };
-	_size = { 5.f, 5.f, 0.f };
+	_size = { 25.f, 25.f, 0.f };
 	EnemyHP = 60.f;
 	_speed = 5.f;
 	if (!Player) {
@@ -17,6 +18,9 @@ void EnemyObject::Initialize() {
 }
 int EnemyObject::Update() {
 
+	if (isnan(AngleFromPlayer) == true) {
+		_info.vPos = { 0, 0, 0 };
+	}
 	_info.vDir = Player->Get_Info().vPos - _info.vPos;
 
 	D3DXVec3Normalize(&_info.vDir, &_info.vDir);
@@ -32,7 +36,9 @@ int EnemyObject::Update() {
 		if (CollisionManager::GetInstance()->Collision_Rect(this, BulletObject)) {
 			EnemyHP -= 10;
 			dynamic_cast<Bullet*>(BulletObject)->Set_Used(true);
-			if (EnemyHP <= 0.f) { _info.vPos = { -9999999,-9999999,-9999999 }; }
+			if (EnemyHP <= 0.f) { _info.vPos = { -9999999,-9999999,-9999999 };
+				dynamic_cast<Player03*>(Player)->SetKillCount(dynamic_cast<Player03*>(Player)->GetKillCount() + 1);
+			}
 		}
 	}
     return 0;
@@ -48,21 +54,53 @@ void EnemyObject::Render(HDC DC) {
 
 		_info.vPos = { 0.f, 0.f, 0.f };
 
+		D3DXVECTOR3 Vertex01 = { sqrtf(3) / 3 * 10, 0.f, 0.f };
+		D3DXVECTOR3 Vertex02 = { -sqrtf(3) / 3 * cosf(D3DXToRadian(60)) * 10, -sqrtf(3) / 3 * sinf(D3DXToRadian(60)) * 10, 0.f };
+		D3DXVECTOR3 Vertex03 = { -sqrtf(3) / 3 * cosf(D3DXToRadian(60)) * 10, sqrtf(3) / 3 * sinf(D3DXToRadian(60)) * 10, 0.f };
+
+		D3DXVECTOR3 Posin01 = { Vertex01.x + 5.f, 0.f, 0.f };
+
+		D3DXVECTOR3 Posin02S = { Vertex01.x - 2.f, -1.f, 0.f };
+		D3DXVECTOR3 Posin02 = { Vertex01.x + 4.f, -1.f, 0.f }
+		;
+		D3DXVECTOR3 Posin03S = { Vertex01.x - 2.f, 1.f, 0.f };
+		D3DXVECTOR3 Posin03 = { Vertex01.x + 4.f, 1.f, 0.f };
+
 		D3DXMatrixScaling(&ScaleMatrix, 5.f, 5.f, 0.f);
 		D3DXMatrixRotationZ(&RotationMatrix, D3DXToRadian(AngleFromPlayer));
-		D3DXMatrixTranslation(&PositionMatrix, 700.f, 100.f, 0.f);
+		D3DXMatrixTranslation(&PositionMatrix, StartPos.x, StartPos.y, 0.f);
 
 		_info.matWorld = ScaleMatrix * RotationMatrix * PositionMatrix;
 
 		D3DXVec3TransformCoord(&_info.vPos, &_info.vPos, &_info.matWorld);
+		D3DXVec3TransformCoord(&Vertex01, &Vertex01, &_info.matWorld);
+		D3DXVec3TransformCoord(&Vertex02, &Vertex02, &_info.matWorld);
+		D3DXVec3TransformCoord(&Vertex03, &Vertex03, &_info.matWorld);
 
-		Rectangle(DC, _info.vPos.x + ScrollManager::GetInstance()->Get_ScrollX() - 5.f,
-			_info.vPos.y + ScrollManager::GetInstance()->Get_ScrollY() - 5.f,
-			_info.vPos.x + ScrollManager::GetInstance()->Get_ScrollX() + 5.f,
-			_info.vPos.y + ScrollManager::GetInstance()->Get_ScrollY() + 5.f);
+		D3DXVec3TransformCoord(&Posin01, &Posin01, &_info.matWorld);
+		D3DXVec3TransformCoord(&Posin02, &Posin02, &_info.matWorld);
+		D3DXVec3TransformCoord(&Posin03, &Posin03, &_info.matWorld);
+		D3DXVec3TransformCoord(&Posin02S, &Posin02S, &_info.matWorld);
+		D3DXVec3TransformCoord(&Posin03S, &Posin03S, &_info.matWorld);
 
+		HPEN myPen = CreatePen(PS_SOLID, 5, RGB(0, 0, 0));
+		HPEN oldPen = (HPEN)SelectObject(DC, myPen);
 
-		Get_HPBar(DC);
+		MoveToEx(DC, Vertex01.x + ScrollManager::GetInstance()->Get_ScrollX(), Vertex01.y + ScrollManager::GetInstance()->Get_ScrollY(), nullptr);
+		LineTo(DC, Posin01.x + ScrollManager::GetInstance()->Get_ScrollX(), Posin01.y + ScrollManager::GetInstance()->Get_ScrollY());
+		MoveToEx(DC, Posin02S.x + ScrollManager::GetInstance()->Get_ScrollX(), Posin02S.y + ScrollManager::GetInstance()->Get_ScrollY(), nullptr);
+		LineTo(DC, Posin02.x + ScrollManager::GetInstance()->Get_ScrollX(), Posin02.y + ScrollManager::GetInstance()->Get_ScrollY());
+		MoveToEx(DC, Posin03S.x + ScrollManager::GetInstance()->Get_ScrollX(), Posin03S.y + ScrollManager::GetInstance()->Get_ScrollY(), nullptr);
+		LineTo(DC, Posin03.x + ScrollManager::GetInstance()->Get_ScrollX(), Posin03.y + ScrollManager::GetInstance()->Get_ScrollY());
+		MoveToEx(DC, Vertex01.x + ScrollManager::GetInstance()->Get_ScrollX(), Vertex01.y + ScrollManager::GetInstance()->Get_ScrollY(), nullptr);
+
+		LineTo(DC, Vertex02.x + ScrollManager::GetInstance()->Get_ScrollX(), Vertex02.y + ScrollManager::GetInstance()->Get_ScrollY());
+		LineTo(DC, Vertex03.x + ScrollManager::GetInstance()->Get_ScrollX(), Vertex03.y + ScrollManager::GetInstance()->Get_ScrollY());
+		LineTo(DC, Vertex01.x + ScrollManager::GetInstance()->Get_ScrollX(), Vertex01.y + ScrollManager::GetInstance()->Get_ScrollY());
+
+		SelectObject(DC, oldPen);
+		DeleteObject(myPen);
+		//Get_HPBar(DC);
 	}
 }
 void EnemyObject::Release() {
