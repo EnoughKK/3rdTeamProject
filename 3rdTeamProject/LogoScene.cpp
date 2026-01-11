@@ -12,12 +12,12 @@ LogoScene::~LogoScene()
 
 void LogoScene::Init()
 {
-    Object* button = new Button(L"Roulette", SceneType::Stage_01);
+    Object* button = new Button(L"Maze", SceneType::Stage_01);
     button->Initialize();
     button->SetPos(350, 200);
     GET_SINGLE(ObjectManager)->Add(BUTTON, button);
 
-    button = new Button(L"Stage_02", SceneType::Stage_02);
+    button = new Button(L"Roulette", SceneType::Stage_02);
     button->Initialize();
     button->SetPos(350, 300);
     GET_SINGLE(ObjectManager)->Add(BUTTON, button);
