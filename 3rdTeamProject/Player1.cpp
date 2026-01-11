@@ -7,6 +7,7 @@ Player1::Player1()
 
 Player1::~Player1()
 {
+	Release();
 }
 
 void Player1::Initialize()
@@ -18,6 +19,7 @@ void Player1::Initialize()
 
 int Player1::Update()
 {
+	prevPos = _info.vPos;
 	_info.vPos.y += 2.f;
 	LT = { LONG(_info.vPos.x - radius), LONG(_info.vPos.y - radius)};
 	RT = { LONG(_info.vPos.x + radius), LONG(_info.vPos.y - radius) };

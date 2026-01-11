@@ -117,6 +117,13 @@ void Maze::Initialize()
 	//29
 	m_vPoint.push_back({ _info.vPos.x - 45.f  , _info.vPos.y + 20.f, 0.f });
 	m_vPoint.push_back({ _info.vPos.x  , _info.vPos.y + 20.f, 0.f });
+
+	//°ñ ³×¸ð
+	m_vPoint.push_back({ _info.vPos.x - 100.f, _info.vPos.y + 60.f, 0.f });
+	m_vPoint.push_back({ _info.vPos.x - 80.f, _info.vPos.y + 60.f, 0.f });
+	m_vPoint.push_back({ _info.vPos.x - 80.f, _info.vPos.y + 80.f, 0.f });
+	m_vPoint.push_back({ _info.vPos.x - 100.f, _info.vPos.y + 80.f, 0.f });
+
 	lines.push_back({ m_vPoint[0] ,m_vPoint[1] });
 	lines.push_back({ m_vPoint[1] ,m_vPoint[2] });
 	lines.push_back({ m_vPoint[2] ,m_vPoint[3] });
@@ -127,20 +134,24 @@ void Maze::Initialize()
 	cout << m_vPoint.size() << endl;
 
 #endif // _DEBUG
-	for (int i = 4; i < m_vPoint.size(); i = i+2) {
+	for (int i = 4; i < m_vPoint.size()- 4; i = i+2) {
 		if (i >= m_vPoint.size()) {
 			break;
 		}
 		lines.push_back({ m_vPoint[i] ,m_vPoint[i+1] });
 		
 	}
+	lines.push_back({ m_vPoint[62] ,m_vPoint[63] });
+	lines.push_back({ m_vPoint[63] ,m_vPoint[64] });
+	lines.push_back({ m_vPoint[64] ,m_vPoint[65] });
+	lines.push_back({ m_vPoint[65] ,m_vPoint[62] });
 
-	originalLines.push_back({ m_vPoint[0] ,m_vPoint[1] });
-	originalLines.push_back({ m_vPoint[1] ,m_vPoint[2] });
-	originalLines.push_back({ m_vPoint[2] ,m_vPoint[3] });
-	originalLines.push_back({ m_vPoint[3] ,m_vPoint[0] });
+	//originalLines.push_back({ m_vPoint[0] ,m_vPoint[1] });
+	//originalLines.push_back({ m_vPoint[1] ,m_vPoint[2] });
+	//originalLines.push_back({ m_vPoint[2] ,m_vPoint[3] });
+	//originalLines.push_back({ m_vPoint[3] ,m_vPoint[0] });
 
-	for (int i = 4; i < lines.size(); i++) {
+	for (int i = 0; i < lines.size(); i++) {
 		originalLines.push_back(lines[i]);
 	}
 

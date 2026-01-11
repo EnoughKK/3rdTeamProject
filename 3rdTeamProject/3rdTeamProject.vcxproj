@@ -136,6 +136,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="3rdTeamProject.h" />
+    <ClInclude Include="Arrow.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="Camera.h" />
@@ -158,11 +159,14 @@
     <ClInclude Include="Player2.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Rifle.h" />
+    <ClInclude Include="Roulette.h" />
+    <ClInclude Include="RouletteButton.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="ScrollManager.h" />
     <ClInclude Include="Square_Obstacle.h" />
     <ClInclude Include="Stage_01.h" />
+    <ClInclude Include="Stage_02.h" />
     <ClInclude Include="Stage_11.h" />
     <ClInclude Include="Stage_21.h" />
     <ClInclude Include="targetver.h" />
@@ -173,6 +177,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="3rdTeamProject.cpp" />
+    <ClCompile Include="Arrow.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Camera.cpp" />
@@ -194,11 +199,14 @@
     <ClCompile Include="Rifle.cpp" />
     <ClCompile Include="Player1.cpp" />
     <ClCompile Include="Player2.cpp" />
+    <ClCompile Include="Roulette.cpp" />
+    <ClCompile Include="RouletteButton.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="ScrollManager.cpp" />
     <ClCompile Include="Square_Obstacle.cpp" />
     <ClCompile Include="Stage_01.cpp" />
+    <ClCompile Include="Stage_02.cpp" />
     <ClCompile Include="Stage_11.cpp" />
     <ClCompile Include="Stage_21.cpp" />
     <ClCompile Include="TimeManager.cpp" />

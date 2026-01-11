@@ -4,7 +4,8 @@ enum class SceneType
 {
 	None,
 	Logo,
-	Stage_01, // 己刮
+	Stage_01, 
+	Stage_02,// 己刮
 	Stage_11, // 己辣
 	Stage_21, // 坚辣
 
@@ -20,6 +21,8 @@ enum OBJID
 	MONSTER,
 	BUTTON,
 	MAZE,
+	ROULETTE,
+	ARROW,
 	OBSTACLE_S,
 
 	OBJ_END
