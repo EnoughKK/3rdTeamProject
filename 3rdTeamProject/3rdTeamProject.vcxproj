@@ -169,6 +169,7 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="TimeManager.h" />
     <ClInclude Include="TriAngle_Obstacle.h" />
+    <ClInclude Include="TriAngle_Obstacle2.h" />
     <ClInclude Include="Types.h" />
     <ClInclude Include="Utils.h" />
     <ClInclude Include="Wall.h" />
@@ -206,6 +207,7 @@
     <ClCompile Include="Stage_21.cpp" />
     <ClCompile Include="TimeManager.cpp" />
     <ClCompile Include="TriAngle_Obstacle.cpp" />
+    <ClCompile Include="TriAngle_Obstacle2.cpp" />
     <ClCompile Include="Utils.cpp" />
     <ClCompile Include="Wall.cpp" />
   </ItemGroup>

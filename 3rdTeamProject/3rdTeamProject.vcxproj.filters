@@ -156,6 +156,9 @@
     <ClInclude Include="Jump_Obstacle.h">
       <Filter>소스 파일\03.Object\Obstacle</Filter>
     </ClInclude>
+    <ClInclude Include="TriAngle_Obstacle2.h">
+      <Filter>소스 파일\03.Object\Obstacle</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="3rdTeamProject.rc">
@@ -262,6 +265,9 @@
       <Filter>소스 파일\03.Object\Obstacle</Filter>
     </ClCompile>
     <ClCompile Include="Jump_Obstacle.cpp">
+      <Filter>소스 파일\03.Object\Obstacle</Filter>
+    </ClCompile>
+    <ClCompile Include="TriAngle_Obstacle2.cpp">
       <Filter>소스 파일\03.Object\Obstacle</Filter>
     </ClCompile>
   </ItemGroup>
