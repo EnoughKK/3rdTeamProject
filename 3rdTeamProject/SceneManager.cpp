@@ -3,6 +3,7 @@
 #include "Scene.h"
 #include "LogoScene.h"
 #include "Stage_01.h"
+#include "Stage_02.h"
 #include "Stage_11.h"
 #include "Stage_21.h"
 
@@ -54,6 +55,9 @@ void SceneManager::ChangeScene(SceneType sceneType)
 
 	case SceneType::Stage_01:
 		newScene = new Stage_01();
+		break;
+	case SceneType::Stage_02:
+		newScene = new Stage_02();
 		break;
 
 	case SceneType::Stage_11:

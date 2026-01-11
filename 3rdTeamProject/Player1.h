@@ -35,7 +35,7 @@ public:
     DIRECTION GetPrevDir() { return prevDir; }
     void SetPrevDir(DIRECTION dir) { prevDir = dir; }
     void SetCurDir(DIRECTION dir) { curDir = dir; }
-
+    D3DXVECTOR3 GetPrevPos() { return prevPos; }
     float GetRadius() { return radius; }
     
 private:
@@ -47,5 +47,6 @@ private:
     bool isSliding;
     DIRECTION curDir;
     DIRECTION prevDir;
+    D3DXVECTOR3 prevPos;
 };
 
