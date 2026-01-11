@@ -14,22 +14,22 @@ void LogoScene::Init()
 {
     Object* button = new Button(L"Roulette", SceneType::Stage_01);
     button->Initialize();
-    button->SetPos(350, 100);
+    button->SetPos(350, 200);
     GET_SINGLE(ObjectManager)->Add(BUTTON, button);
 
     button = new Button(L"Stage_02", SceneType::Stage_02);
     button->Initialize();
-    button->SetPos(350, 200);
+    button->SetPos(350, 300);
     GET_SINGLE(ObjectManager)->Add(BUTTON, button);
 
     button = new Button(L"Geometry", SceneType::Stage_11);
     button->Initialize();
-    button->SetPos(350, 300);
+    button->SetPos(350, 400);
     GET_SINGLE(ObjectManager)->Add(BUTTON, button);
 
     button = new Button(L"CQB", SceneType::Stage_21);
     button->Initialize();
-    button->SetPos(350, 400);
+    button->SetPos(350, 500);
     GET_SINGLE(ObjectManager)->Add(BUTTON, button);
 }
 
