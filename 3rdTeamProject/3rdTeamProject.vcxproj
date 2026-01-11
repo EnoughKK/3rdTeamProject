@@ -79,6 +79,14 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <Optimization>Disabled</Optimization>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
+      <IntrinsicFunctions>false</IntrinsicFunctions>
+      <OmitFramePointers>false</OmitFramePointers>
+      <EnableFiberSafeOptimizations>false</EnableFiberSafeOptimizations>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -136,50 +144,82 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="3rdTeamProject.h" />
+    <ClInclude Include="Bullet.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="Defines.h" />
+    <ClInclude Include="End_Potal.h" />
+    <ClInclude Include="Enemy.h" />
     <ClInclude Include="Enums.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="InputManager.h" />
+    <ClInclude Include="Jump_Obstacle.h" />
+    <ClInclude Include="Light.h" />
+    <ClInclude Include="LineManager.h" />
     <ClInclude Include="LogoScene.h" />
+    <ClInclude Include="Maze.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="ObjectManager.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="Player03.h" />
+    <ClInclude Include="Player1.h" />
+    <ClInclude Include="Player2.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="Rifle.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
+    <ClInclude Include="ScrollManager.h" />
+    <ClInclude Include="Square_Obstacle.h" />
     <ClInclude Include="Stage_01.h" />
     <ClInclude Include="Stage_11.h" />
     <ClInclude Include="Stage_21.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="TimeManager.h" />
+    <ClInclude Include="TriAngle_Obstacle.h" />
+    <ClInclude Include="TriAngle_Obstacle2.h" />
     <ClInclude Include="Types.h" />
     <ClInclude Include="Utils.h" />
+    <ClInclude Include="Wall.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="3rdTeamProject.cpp" />
+    <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CollisionManager.cpp" />
+    <ClCompile Include="End_Potal.cpp" />
+    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="InputManager.cpp" />
+    <ClCompile Include="Jump_Obstacle.cpp" />
+    <ClCompile Include="Light.cpp" />
+    <ClCompile Include="LineManager.cpp" />
     <ClCompile Include="LogoScene.cpp" />
+    <ClCompile Include="Maze.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="ObjectManager.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Player03.cpp" />
+    <ClCompile Include="Rifle.cpp" />
+    <ClCompile Include="Player1.cpp" />
+    <ClCompile Include="Player2.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
+    <ClCompile Include="ScrollManager.cpp" />
+    <ClCompile Include="Square_Obstacle.cpp" />
     <ClCompile Include="Stage_01.cpp" />
     <ClCompile Include="Stage_11.cpp" />
     <ClCompile Include="Stage_21.cpp" />
     <ClCompile Include="TimeManager.cpp" />
+    <ClCompile Include="TriAngle_Obstacle.cpp" />
+    <ClCompile Include="TriAngle_Obstacle2.cpp" />
     <ClCompile Include="Utils.cpp" />
+    <ClCompile Include="Wall.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="3rdTeamProject.rc" />

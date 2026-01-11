@@ -14,7 +14,7 @@ Game::~Game()
 void Game::Initialize()
 {
 	_hDC = ::GetDC(g_hWnd);
-
+	// 
 	// 더블 버퍼링
 	::GetClientRect(g_hWnd, &_rect);
 	_hdcBack = ::CreateCompatibleDC(_hDC);
@@ -24,8 +24,22 @@ void Game::Initialize()
 
 	GET_SINGLE(TimeManager)->Init();
 	GET_SINGLE(InputManager)->Init(g_hWnd);
+	GET_SINGLE(Camera)->Init();
 
 	GET_SINGLE(SceneManager)->ChangeScene(SceneType::Logo);
+
+#ifdef _DEBUG
+
+	if (::AllocConsole() == TRUE)
+	{
+		FILE* nfp[3];
+		freopen_s(nfp + 0, "CONOUT$", "rb", stdin);
+		freopen_s(nfp + 1, "CONOUT$", "wb", stdout);
+		freopen_s(nfp + 2, "CONOUT$", "wb", stderr);
+		std::ios::sync_with_stdio();
+	}
+
+#endif // _DEBUG
 }
 
 void Game::Update()
@@ -33,6 +47,7 @@ void Game::Update()
 	GET_SINGLE(TimeManager)->Update();
 	GET_SINGLE(InputManager)->Update();
 	GET_SINGLE(SceneManager)->Update();
+	GET_SINGLE(Camera)->Update();
 }
 
 void Game::Late_Update()
@@ -52,4 +67,10 @@ void Game::Release()
 {
 	ReleaseDC(g_hWnd, _hDC);
 	ReleaseDC(g_hWnd, _hdcBack);
+
+#ifdef _DEBUG
+
+	FreeConsole();
+
+#endif // _DEBUG
 }

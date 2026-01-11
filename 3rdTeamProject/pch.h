@@ -9,13 +9,15 @@
 #include <string>
 #include <algorithm>
 #include <cmath>
+#include <ctime>
 
 #include <d3d9.h>
 #include <d3dx9.h>
 
 #pragma comment(lib, "d3d9.lib")
 #pragma comment(lib, "d3dx9.lib")
-
+#include <io.h>
+#include <iostream>
 #include "Types.h"
 #include "Defines.h"
 #include "Enums.h"
@@ -25,8 +27,8 @@
 #include "TimeManager.h"
 #include "SceneManager.h"
 #include "ObjectManager.h"
-//#include "CollisionManager.h"
-//#include "Camera.h"
+#include "CollisionManager.h"
+#include "Camera.h"
 
 #ifdef _DEBUG
 
