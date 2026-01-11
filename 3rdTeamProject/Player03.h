@@ -15,6 +15,13 @@ public:
 	D3DXVECTOR3 Get_PlayerPositionValue() { return PlayerPositionValue; }
 	void Set_PlayerPositionValue(D3DXVECTOR3 _pOut) { PlayerPositionValue = _pOut; }
 
+	POINT GetMousePoint() { return MousePoint; }
+
+	void SetKillCount(INT _KC) { EnemyKillCount = _KC; }
+	INT GetKillCount() { return EnemyKillCount; }
+
+	D3DXMATRIX GetPosinWorld() { return PosinWorld; }
+
 private:
 	D3DXVECTOR3	PlayerScaleValue;
 	D3DXVECTOR3	PlayerPositionValue;
@@ -23,5 +30,9 @@ private:
 	D3DXVECTOR3 Posin;
 	POINT		MousePoint;
 	FLOAT		PosinRotationValue;
+	D3DXMATRIX  PosinWorld;
+
+	INT			EnemyKillCount;
+	HFONT		SerifFont;
 };
 

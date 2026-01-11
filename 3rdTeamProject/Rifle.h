@@ -16,6 +16,8 @@ public:
 	void Set_Player(Object* _Player) { Player = _Player; }
 
 private:
-	Object* Player;
+	Object*		Player;
+	POINT		MousePoint;
+	D3DXVECTOR3 PositionValue;
 };
 

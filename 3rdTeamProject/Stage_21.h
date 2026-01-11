@@ -13,6 +13,8 @@ public:
 	virtual void Render(HDC DC)		override;
 	virtual void Release()			override;
 
+	void GameUI(HDC DC);
+
 private:
 	Object* Player;
 	Object* Enemy;

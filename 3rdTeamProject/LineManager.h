@@ -29,6 +29,7 @@ public:
 		m_Linelist.push_back(new Line{ _POSX + _WTH , _POSY , _POSX + _WTH , _POSY + _HGT });
 
 		ObjectManager::GetInstance()->Add(OBJID::ENVIROMENT, new Wall(_POSX, _POSY, _POSX + _WTH, _POSY + _HGT));
+		m_WallList.push_back(new Line{ _POSX, _POSY, _POSX + _WTH , _POSY + _HGT });
 	};
 
 	void Release();
