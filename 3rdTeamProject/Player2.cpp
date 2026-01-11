@@ -1,5 +1,7 @@
 #include "pch.h"
 #include "Player2.h"
+#include "Button.h"
+#include "Stage_11.h"
 
 Player2::Player2()
 {
@@ -237,12 +239,30 @@ void Player2::SquareCol()
 
 			_jumpSpeed = 0.f;
 
+			_info.vPos = { 150.f, 480.f, 0 };
+
+			_bodyAngle = 0.f;
+		}
+	}
+
+	// 삼각형 장애물
+	Obstacle_List = GET_SINGLE(ObjectManager)->GetObjectList(OBSTACLE_T2);
+
+	for (auto obstacle : (*Obstacle_List))
+	{
+		if (GET_SINGLE(CollisionManager)->OnlyCheck(this, obstacle))
+		{
+			_isjump = false;
+
+			_jumpSpeed = 0.f;
+
 			_info.vPos = { 150.f, 470.f, 0 };
 
 			_bodyAngle = 0.f;
 		}
 	}
 
+	// jump
 	Obstacle_List = GET_SINGLE(ObjectManager)->GetObjectList(OBSTACLE_J);
 
 	for (auto obstacle : (*Obstacle_List))
@@ -252,6 +272,21 @@ void Player2::SquareCol()
 			_isjump = true;
 
 			_jumpSpeed = 6.5f;
+		}
+	}
+
+	Obstacle_List = GET_SINGLE(ObjectManager)->GetObjectList(POTAL);
+
+	for (auto obstacle : (*Obstacle_List))
+	{
+		if (GET_SINGLE(CollisionManager)->OnlyCheck(this, obstacle))
+		{
+			Object* button = new Button(L"클리어!", SceneType::Logo);
+			button->Initialize();
+			button->SetPos(WINCX/2, WINCY / 2);
+			GET_SINGLE(ObjectManager)->Add(BUTTON, button);
+
+			static_cast<Stage_11*>(GET_SINGLE(SceneManager)->GetScene())->SetStop();
 		}
 	}
 }

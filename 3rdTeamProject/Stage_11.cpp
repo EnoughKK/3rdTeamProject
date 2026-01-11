@@ -5,6 +5,7 @@
 #include "TriAngle_Obstacle.h"
 #include "TriAngle_Obstacle2.h"
 #include "Jump_Obstacle.h"
+#include "End_Potal.h"
 
 Stage_11::Stage_11()
 {
@@ -29,7 +30,17 @@ void Stage_11::Init()
 
 void Stage_11::Update()
 {
-    GET_SINGLE(ObjectManager)->Update();
+	if(!_isStop)
+		GET_SINGLE(ObjectManager)->Update();
+	else
+	{
+		const vector<Object*>* buttonList = GET_SINGLE(ObjectManager)->GetObjectList(BUTTON);
+
+		for (auto button : (*buttonList))
+		{
+			button->Update();
+		}
+	}
 
 }
 
@@ -906,4 +917,15 @@ void Stage_11::mapInit()
 	SO->SetPos(12400.f, 400.f);
 	SO->SetSize(50.f, 200.f);
 	GET_SINGLE(ObjectManager)->Add(OBSTACLE_S, SO);
+
+	SO = new TriAngle_Obstacle;
+	SO->Initialize();
+	SO->SetPos(11900.f, 487.5f);
+	SO->SetSize(950.f, 25.f);
+	GET_SINGLE(ObjectManager)->Add(OBSTACLE_T, SO);
+
+	SO = new End_Potal;
+	SO->Initialize();
+	SO->SetPos(12400.f, 275.f);
+	GET_SINGLE(ObjectManager)->Add(POTAL, SO);
 }
